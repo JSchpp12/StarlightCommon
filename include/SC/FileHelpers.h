@@ -10,16 +10,17 @@
 namespace star{
     namespace common{
         struct FileHelpers{
-            static std::string ReadFile(std::string pathToFile){
+            static std::string ReadFile(std::string pathToFile, bool includeCarriageReturns=true){
                 std::string line, text;
                 std::ifstream fileReader(pathToFile);
 
                 while (std::getline(fileReader, line)) {
-                    text += line + "\n";
+                    text += line + (includeCarriageReturns ? "\n" : ""); 
                 }
 
 	            return(text); 
             }
+
 
             static std::string GetFileExtension(const std::string& pathToFile){
                 return pathToFile.substr(pathToFile.find_last_of('.')); 

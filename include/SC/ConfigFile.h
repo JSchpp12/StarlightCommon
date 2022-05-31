@@ -14,7 +14,7 @@ namespace star{
         class ConfigFile{
         public:
             ConfigFile(const std::string& configFilePath){
-                auto contents = FileHelpers::ReadFile(configFilePath); 
+                auto contents = FileHelpers::ReadFile(configFilePath, false); 
                 std::istringstream stream(contents); 
 
                 std::string line; 
