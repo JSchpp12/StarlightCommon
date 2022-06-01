@@ -9,12 +9,12 @@ namespace star{
         template<typename Resource, typename Identifier> 
         class ResourceHolder{
             public: 
-            void Load(Identifier id, const std::string& filename){
-                std::unique_ptr<Resource> resource(new Resource()); 
-                if(!resource->LoadFromFile()){
-                    throw std::runtime_error("ResourceHolder::load() -- failed to load resource from file"); 
-                }
-            }
+            // void Load(Identifier id, const std::string& filename){
+            //     std::unique_ptr<Resource> resource(new Resource()); 
+            //     if(!resource->LoadFromFile()){
+            //         throw std::runtime_error("ResourceHolder::load() -- failed to load resource from file"); 
+            //     }
+            // }
 
             Resource& Get(Identifier id){
                 auto found = resourceMap.find(id); 
