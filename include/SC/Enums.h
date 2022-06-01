@@ -18,5 +18,11 @@ namespace star{
         enum Config_Settings{
             mediadirectory
         }; 
+
+        enum Handle_Type{
+            shader, 
+            object, 
+            texture
+        }; 
     }
 }
