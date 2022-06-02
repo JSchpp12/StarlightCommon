@@ -13,20 +13,22 @@ namespace star{
     namespace common{
         class Application{
         public: 
-            Application(const std::string& pathConfigFile) : 
-                configFile(new ConfigFile(pathConfigFile))
+            Application(ConfigFile* configFile, FileResourceManager<Shader>* shaderManager, FileResourceManager<Object>* objectManager, FileResourceManager<Texture>* textureManager) : 
+                configFile(configFile), 
+                shaderManager(shaderManager), 
+                objectManager(objectManager), 
+                textureManager(textureManager)
             { 
-                
             }
 
             virtual void Load() = 0; 
 
             virtual void Update() = 0; 
 
-            std::unique_ptr<FileResourceManager<Shader>> shaderManager; 
-            std::unique_ptr<FileResourceManager<Object>> objectManager; 
-            std::unique_ptr<FileResourceManager<std::string>> textureManager;
-            std::unique_ptr<ConfigFile> configFile; 
+            FileResourceManager<Shader>* shaderManager; 
+            FileResourceManager<Object>* objectManager; 
+            FileResourceManager<Texture>* textureManager;
+            ConfigFile* configFile; 
 
         protected: 
 
