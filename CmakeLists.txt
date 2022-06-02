@@ -24,6 +24,14 @@ SET(${PROJECT_NAME}_HEDERS
     "include/Handle.hpp"
 )
 
+#check for needed includes 
+if(DEFINED GLFW_SOURCE_DIR)
+    set(GLFW_INCLUDE_DIR ${GLFW_SOURCE_DIR}/include)
+endif()
+if(NOT IS_DIRECTORY ${GLFW_INCLUDE_DIR})
+    message(FATAL_ERROR "GLFW is needed for common includes. Ensure it is available.")
+endif()
+
 add_library(${PROJECT_NAME} INTERFACE)
 #provide alias for subdirectory
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
@@ -32,6 +40,7 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 target_include_directories(${PROJECT_NAME} 
     INTERFACE
         ${glm_SOURCE_DIR}
+        ${GLFW_INCLUDE_DIR}
         # ${CMAKE_CURRENT_SOURCE_DIR}/include
         $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>

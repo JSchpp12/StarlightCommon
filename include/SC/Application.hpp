@@ -6,6 +6,8 @@
 #include "Object.hpp"
 #include "ConfigFile.hpp"
 
+#include <GLFW/glfw3.h>
+
 #include <memory> 
 #include <string> 
 
