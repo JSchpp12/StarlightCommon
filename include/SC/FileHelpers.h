@@ -34,8 +34,6 @@ namespace star{
             static Shader_File_Type GetFileType(const std::string& pathToFile){
                 auto posOfExt = pathToFile.find_last_of('.'); 
 
-                std::cout << "Last occurrence of . is at:  " << posOfExt << std::endl; 
-
                 auto fileExtension = pathToFile.substr(posOfExt); 
 
                 if (fileExtension == ".spv"){
