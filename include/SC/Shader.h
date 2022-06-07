@@ -12,6 +12,12 @@ namespace star{
                 // void LoadFromFile(){
                 //     std::cout << "loading" << std::endl; 
                 // }
+
+                virtual ~Shader(){};
+
+                std::vector<uint32_t> GetSpirV() {
+                    return *this->compiledCode.get();
+                }
             protected: 
                 
                 

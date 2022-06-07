@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "ConfigFile.h"
+#include "ConfigFile.hpp"
 #include "Handle.hpp"
 
 #include <string> 
@@ -13,6 +13,12 @@ namespace star{
         template<typename T>
         class ResourceContainer{
         public:
+            //TODO: make these private
+            std::vector<std::unique_ptr<T>> container;
+            std::map<std::string, Handle> fileMap;
+
+            virtual ~ResourceContainer(){}; 
+            
             //check the file map to see if the resource has been previously loaded
             bool FileLoaded(const std::string& pathToObject){
                 auto found = fileMap.find(pathToObject); 
@@ -21,7 +27,7 @@ namespace star{
                 return false; 
             }
 
-            T& GetResource(const Handle& handle){
+            T* GetResource(const Handle& handle){
                 if (handle.containerIndex > container.size()){
                     throw std::runtime_error("Requested a resource that is outside the range of the container");
                 }
@@ -43,8 +49,6 @@ namespace star{
             }
 
         private: 
-            std::vector<std::unique_ptr<T>> container; 
-            std::map<std::string, Handle> fileMap; 
         };
     }
 }
