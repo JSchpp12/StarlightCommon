@@ -22,7 +22,7 @@ namespace star{
             
             virtual void prepare() = 0; 
 
-            virtual void drawFrame() = 0; 
+            virtual void draw() = 0; 
 
             virtual void cleanup() = 0; 
 
