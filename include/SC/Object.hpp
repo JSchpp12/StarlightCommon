@@ -33,9 +33,11 @@ namespace star{
                 modelMatrix(std::make_unique<glm::mat4>(glm::identity<glm::mat4>())), 
                 position(std::make_unique<glm::vec4>(glm::vec4{0.f, 0.f, 0.f, 1.f})),
                 relativeTranslation(std::make_unique<glm::vec3>(glm::vec3())), 
-                scaleAmt(std::make_unique<glm::vec3>(glm::vec3{1.f, 1.f, 1.f})),
+                scaleAmt(std::make_unique<glm::vec3>(glm::vec3{2.5f, 2.5f, 2.5f})),
                 relativeRotationList(std::make_unique<std::queue<std::pair<const double, const glm::vec3>>>())
             {
+                auto tmpMatrix = *this->modelMatrix; 
+                this->modelMatrix = std::make_unique<glm::mat4>(glm::scale(*this->modelMatrix, *this->scaleAmt)); 
             } 
 
             virtual ~Object() {}; 
@@ -54,13 +56,18 @@ namespace star{
                 return *this->texture.get(); 
             }
 
-            //glm::mat4 getModelMatrix() {
-            //    return *this->modelMatrix; 
-            //};
-
             glm::vec4 getPosition() {
                 return *this->position; 
             };
+
+            glm::vec3 getScale() {
+                return *this->scaleAmt;
+            }
+
+            void setScale(glm::vec3 scale) {
+                this->scaleAmt = std::make_unique<glm::vec3>(scale); 
+                this->modelMatrix = std::make_unique<glm::mat4>(glm::scale(*this->modelMatrix, scale)); 
+            }
 
             //TODO: implement set position
 
@@ -84,13 +91,19 @@ namespace star{
                 });
             }
 
-            void rotateRelative(float amtDegrees, glm::vec3 rotationVector, bool inDegrees = true) {
+            /// <summary>
+            /// Rotate object relative to object's coordinate system
+            /// </summary>
+            /// <param name="amt">Ammount of rotation to apply</param>
+            /// <param name="rotationVector">Vector around which to apply rotation</param>
+            /// <param name="inDegrees">Is the amount provided in degrees</param>
+            void rotateRelative(float amt, glm::vec3 rotationVector, bool inDegrees = true) {
                 float radians; 
                 if (inDegrees) {
-                    radians = glm::radians(amtDegrees); 
+                    radians = glm::radians(amt); 
                 }
                 else {
-                    radians = amtDegrees; 
+                    radians = amt; 
                 }
 
                 //might want to normalize vector
