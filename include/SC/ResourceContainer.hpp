@@ -41,7 +41,7 @@ namespace star{
             }
 
             Handle AddFileResource(const std::string path, std::unique_ptr<T>& resource){
-                Handle newHandle{this->container.size()}; 
+                Handle newHandle{(int)this->container.size()}; 
                 this->container.push_back(std::move(resource)); 
 
                 this->fileMap.insert(std::pair<std::string, Handle>(path, newHandle)); 
