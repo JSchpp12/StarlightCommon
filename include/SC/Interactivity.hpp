@@ -43,10 +43,14 @@ namespace star {
 			/// <param name="yoffset"></param>
 			virtual void scrollCallback(double xoffset, double yoffset) {}; 
 
+			/// <summary>
+			/// Function that will be called before the user defined appliction world update function
+			/// </summary>
+			virtual void worldUpdate() {};
+
 		protected:
 
 		private:
-
 
 		};
 	}
