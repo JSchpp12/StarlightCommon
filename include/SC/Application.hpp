@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "ConfigFile.hpp"
 #include "Handle.hpp"
+#include "Camera.hpp"
 
 #include <GLFW/glfw3.h>
 
@@ -16,12 +17,13 @@ namespace star{
         template<typename shaderManager, typename objectManager, typename textureManager>
         class Application{
         public: 
-            Application(ConfigFile* configFile, std::vector<common::Handle>* objectList, shaderManager* shaderManager, objectManager* objectManager, textureManager* textureManager) :
+            Application(ConfigFile* configFile, std::vector<common::Handle>* objectList, shaderManager* shaderManager, objectManager* objectManager, textureManager* textureManager, Camera* inCamera) :
                 configFile(configFile), 
                 objectList(objectList),
                 shaderManager(shaderManager), 
                 objectManager(objectManager), 
-                textureManager(textureManager)
+                textureManager(textureManager), 
+                camera(inCamera)
             { 
             }
 
@@ -29,7 +31,7 @@ namespace star{
 
             virtual void Load() = 0; 
 
-            virtual void Update() = 0; 
+            virtual void Update() = 0;  
 
             ConfigFile* configFile; 
 
@@ -38,6 +40,7 @@ namespace star{
             objectManager* objectManager;
             textureManager* textureManager;
             std::vector<common::Handle>* objectList; 
+            Camera* camera; 
 
         private: 
 

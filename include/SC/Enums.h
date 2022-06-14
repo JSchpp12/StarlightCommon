@@ -25,5 +25,18 @@ namespace star{
             object, 
             texture
         }; 
+
+        enum Buttons {
+            STAR_W, 
+            STAR_A, 
+            STAR_S, 
+            STAR_D,
+            STAR_CLICK_LEFT, 
+            STAR_CLICK_RIGHT, 
+            STAR_UP, 
+            STAR_DOWN, 
+            STAR_LEFT,
+            STAR_RIGHT
+        };
     }
 }

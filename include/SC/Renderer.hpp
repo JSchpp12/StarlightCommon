@@ -4,6 +4,7 @@
 #include "Object.hpp"
 #include "Texture.hpp"
 #include "ConfigFile.hpp"
+#include "Camera.hpp"
 
 #include <glm/glm.hpp>
 
@@ -11,11 +12,12 @@ namespace star{
     namespace common{
         class Renderer{
         public:
-            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<Object>* objectManager, common::FileResourceManager<Texture>* textureManager, const std::vector<Handle>* objectHandles) : 
+            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<Object>* objectManager, common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, const std::vector<Handle>* objectHandles) : 
                 configFile(configFile),
                 shaderManager(shaderManager), 
                 objectManager(objectManager), 
                 textureManager(textureManager), 
+                camera(inCamera),
                 objectList(objectHandles) { }
 
             virtual ~Renderer() {}; 
@@ -31,6 +33,7 @@ namespace star{
                 common::FileResourceManager<Shader>* shaderManager; 
                 common::FileResourceManager<Object>* objectManager; 
                 common::FileResourceManager<Texture>* textureManager;
+                common::Camera* camera; 
                 const std::vector<common::Handle>* objectList; 
 
                 struct UniformBufferObject {
