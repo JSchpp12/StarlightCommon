@@ -2,18 +2,18 @@
 
 namespace star{
     namespace common{
-        enum Pipe_Stage{
-            compute, 
-            geometry, 
-            tesilliation, 
-            vertex, 
-            fragment
-        };
 
         enum Shader_File_Type{
             spirv, 
             glsl
         }; 
+
+
+        enum Shader_Stage {
+            vertex,
+            fragment,
+            compute
+        };
 
         enum Config_Settings{
             mediadirectory

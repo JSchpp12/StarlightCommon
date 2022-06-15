@@ -35,6 +35,16 @@ namespace star{
                 return container[handle.containerIndex].get(); 
             }
 
+            Handle GetResource(const std::string& pathToObject) {
+                auto found = fileMap.find(pathToObject); 
+                if (found != fileMap.end()) {
+                    return found->second; 
+                }
+                else {
+                    throw std::runtime_error("Requested resource does not exist"); 
+                }
+            }
+
             Handle AddResource(std::unique_ptr<T> resource){
                 Handle newHandle{this->container.size()}; 
                 this->container.push_back(std::move(resource)); 
@@ -46,6 +56,10 @@ namespace star{
 
                 this->fileMap.insert(std::pair<std::string, Handle>(path, newHandle)); 
                 return newHandle;
+            }
+            
+            size_t numberOfUniqueResources() {
+                return this->container.size(); 
             }
 
         private: 
