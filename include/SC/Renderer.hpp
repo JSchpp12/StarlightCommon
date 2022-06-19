@@ -1,7 +1,7 @@
 #pragma once 
 #include "FileResourceManager.hpp"
 #include "Shader.h"
-#include "Object.hpp"
+#include "LogicalObject.hpp"
 #include "Texture.hpp"
 #include "ConfigFile.hpp"
 #include "Camera.hpp"
@@ -12,7 +12,7 @@ namespace star{
     namespace common{
         class Renderer{
         public:
-            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<Object>* objectManager, common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, const std::vector<Handle>* objectHandles) : 
+            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<LogicalObject>* objectManager, common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, const std::vector<Handle>* objectHandles) : 
                 configFile(configFile),
                 shaderManager(shaderManager), 
                 objectManager(objectManager), 
@@ -31,15 +31,22 @@ namespace star{
         protected: 
                 common::ConfigFile* configFile; 
                 common::FileResourceManager<Shader>* shaderManager; 
-                common::FileResourceManager<Object>* objectManager; 
+                common::FileResourceManager<LogicalObject>* objectManager;
                 common::FileResourceManager<Texture>* textureManager;
                 common::Camera* camera; 
                 const std::vector<common::Handle>* objectList; 
 
+                struct GlobalUniformBufferObject {
+                    alignas(16) glm::mat4 proj;
+                    alignas(16) glm::mat4 view;
+                };
+
                 struct UniformBufferObject {
                     alignas(16) glm::mat4 model; 
-                    alignas(16) glm::mat4 view; 
-                    alignas(16) glm::mat4 proj; 
+                };
+
+                struct ObjectPushConstants {
+                    int modelIndex; 
                 };
 
         private: 
