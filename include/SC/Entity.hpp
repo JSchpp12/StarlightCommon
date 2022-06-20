@@ -24,7 +24,8 @@ namespace star {
 			}
 
 			glm::vec3 getPosition() {
-				return glm::vec3{this->position->x,  this->position->y, this->position->z};
+				glm::mat4 matrixCopy = *this->displayMatrix;
+				return glm::vec3{ matrixCopy[3][0], matrixCopy[3][1], matrixCopy[3][2] }; 
 			};
 
 			/// <summary>
@@ -36,19 +37,13 @@ namespace star {
 
 			}
 
-			/// <summary>
+			/// <summary>T
 			/// Apply translation to object's current position vector and update accordingly
 			/// </summary>
 			/// <param name="movement"></param>
 			virtual void moveRelative(glm::vec3 movement) {
 				//need to update model matrix before applying further translations
-				glm::mat4 tempMatrix = *this->displayMatrix;
-				this->displayMatrix = std::make_unique<glm::mat4>(glm::translate(tempMatrix, movement));
-				this->position = std::make_unique<glm::vec3>(glm::vec3{
-					this->position->x + movement.x,
-					this->position->y + movement.y,
-					this->position->z + movement.z
-				});
+				this->displayMatrix = std::make_unique<glm::mat4>(glm::translate(*this->displayMatrix, movement));
 			}
 
 			/// <summary>
@@ -64,12 +59,7 @@ namespace star {
 					normMove.z * movementAmt
 				};
 
-				this->displayMatrix = std::make_unique<glm::mat4>(glm::translate(*this->displayMatrix, movement)); 
-				this->position = std::make_unique<glm::vec3>(glm::vec3{
-						this->position->x + movementDirection.x,
-						this->position->y + movementDirection.y,
-						this->position->z + movementDirection.z
-				});
+				this->displayMatrix = std::make_unique<glm::mat4>(glm::translate(*this->displayMatrix, movement));
 			}
 
 			/// <summary>

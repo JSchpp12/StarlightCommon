@@ -45,15 +45,15 @@ namespace star{
                 throw std::runtime_error("Unsupported file type provided"); 
             }
 
-            static Pipe_Stage GetStageOfShader(const std::string& pathToFile){
+            static Shader_Stage GetStageOfShader(const std::string& pathToFile){
                 auto posOfExt = pathToFile.find_last_of('.'); 
 
                 auto fileExt = pathToFile.substr(posOfExt); 
 
                 if (fileExt == ".vert"){
-                    return Pipe_Stage::vertex; 
+                    return Shader_Stage::vertex; 
                 }else if (fileExt == ".frag"){
-                    return Pipe_Stage::fragment; 
+                    return Shader_Stage::fragment; 
                 }
 
                 throw std::runtime_error("Unsupported stage type for shader");

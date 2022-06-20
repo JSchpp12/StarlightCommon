@@ -18,6 +18,14 @@ namespace star{
                 return this->fileContainer.GetResource(handle); 
             }
 
+            virtual size_t count() {
+                return this->fileContainer.numberOfUniqueResources(); 
+            }
+
+            //virtual Handle getHandleAt(const size_t& index) {
+            //    return this->fileContainer.getHandleAt(index); 
+            //}
+
         protected:
             common::ResourceContainer<T> fileContainer;
 
