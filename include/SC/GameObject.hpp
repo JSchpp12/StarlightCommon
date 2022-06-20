@@ -9,6 +9,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/matrix_cross_product.hpp>
 
@@ -58,6 +59,10 @@ namespace star{
 
             void setScale(glm::vec3 scale) {
                 this->displayMatrix = std::make_unique<glm::mat4>(glm::scale(*this->displayMatrix, scale)); 
+            }
+
+            glm::mat4 getNormalMatrix() {
+                return glm::inverseTranspose(*this->displayMatrix); 
             }
 
             //TODO: implement set position

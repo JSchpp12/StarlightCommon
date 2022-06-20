@@ -42,7 +42,8 @@ namespace star{
                 };
 
                 struct UniformBufferObject {
-                    alignas(16) glm::mat4 model; 
+                    alignas(16) glm::mat4 modelMatrix; 
+                    alignas(16) glm::mat4 normalMatrix; 
                 };
 
                 struct ObjectPushConstants {
