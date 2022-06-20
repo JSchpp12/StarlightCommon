@@ -19,9 +19,10 @@
 
 namespace star{
     namespace common{
-        class LogicalObject : public Entity{
+        class GameObject : public Entity{
         public:
-            LogicalObject(std::unique_ptr<std::vector<Vertex>> vertexList, std::unique_ptr<std::vector<uint32_t>> indiciesList,
+            GameObject(std::unique_ptr<std::vector<Vertex>> vertexList, std::unique_ptr<std::vector<uint32_t>> indiciesList,
+                glm::vec3 scale,
                 Handle& vertShaderHandle,
                 Handle& fragShaderHandle,
                 Handle& textureHandle) :
@@ -30,13 +31,12 @@ namespace star{
                 indiciesList(std::move(indiciesList)),
                 vertShader(std::make_unique<Handle>(vertShaderHandle)),
                 fragShader(std::make_unique<Handle>(fragShaderHandle)),
-                texture(std::make_unique<Handle>(textureHandle)),
-                scaleAmt(std::make_unique<glm::vec3>(glm::vec3{2.5f, 2.5f, 2.5f}))
+                texture(std::make_unique<Handle>(textureHandle))
             {
-
+                this->setScale(scale); 
             } 
 
-            virtual ~LogicalObject() {}; 
+            virtual ~GameObject() {}; 
 
             //get the handle for the vertex shader 
             Handle getVertShader() {
@@ -52,12 +52,11 @@ namespace star{
                 return *this->texture.get(); 
             }
 
-            glm::vec3 getScale() {
-                return *this->scaleAmt;
-            }
+            //glm::vec3 getScale() {
+            //    return *this->scaleAmt;
+            //}
 
             void setScale(glm::vec3 scale) {
-                this->scaleAmt = std::make_unique<glm::vec3>(scale); 
                 this->displayMatrix = std::make_unique<glm::mat4>(glm::scale(*this->displayMatrix, scale)); 
             }
 
@@ -72,8 +71,6 @@ namespace star{
             //is the mmodel matrix updated with most recent changes 
             bool modelMatrixValid = true; 
 
-            //modelMatrix = translation * rotation * scale
-            std::unique_ptr<glm::vec3> scaleAmt; 
             std::unique_ptr<Handle> vertShader, fragShader, texture; 
             std::unique_ptr<std::vector<common::Vertex>> vertexList;
             std::unique_ptr<std::vector<uint32_t>> indiciesList;

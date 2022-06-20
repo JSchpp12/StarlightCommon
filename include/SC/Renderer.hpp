@@ -1,7 +1,7 @@
 #pragma once 
 #include "FileResourceManager.hpp"
 #include "Shader.h"
-#include "LogicalObject.hpp"
+#include "GameObject.hpp"
 #include "Texture.hpp"
 #include "ConfigFile.hpp"
 #include "Camera.hpp"
@@ -12,7 +12,7 @@ namespace star{
     namespace common{
         class Renderer{
         public:
-            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<LogicalObject>* objectManager, common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, const std::vector<Handle>* objectHandles) : 
+            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<GameObject>* objectManager, common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, const std::vector<Handle>* objectHandles) : 
                 configFile(configFile),
                 shaderManager(shaderManager), 
                 objectManager(objectManager), 
@@ -31,7 +31,7 @@ namespace star{
         protected: 
                 common::ConfigFile* configFile; 
                 common::FileResourceManager<Shader>* shaderManager; 
-                common::FileResourceManager<LogicalObject>* objectManager;
+                common::FileResourceManager<GameObject>* objectManager;
                 common::FileResourceManager<Texture>* textureManager;
                 common::Camera* camera; 
                 const std::vector<common::Handle>* objectList; 
