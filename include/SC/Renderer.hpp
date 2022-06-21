@@ -39,6 +39,9 @@ namespace star{
                 struct GlobalUniformBufferObject {
                     alignas(16) glm::mat4 proj;
                     alignas(16) glm::mat4 view;
+                    alignas(16) glm::vec4 ambientLightColor{1.0f, 1.0f, 1.0f, 0.1f};
+                    glm::vec3 lightPosition{-2.0f, 2.0f, 0.0f};
+                    alignas(16) glm::vec4 lightColor{1.0f, 1.0f, 1.0f, 1.0f};               //w is light intensity
                 };
 
                 struct UniformBufferObject {

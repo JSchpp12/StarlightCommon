@@ -11,16 +11,18 @@ namespace star {
 		class Entity {
 		public:
 			Entity() : 
-				position(std::make_unique<glm::vec3>(glm::vec4(0.f))), 
 				displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f)))
 			{
 			}
 
 			virtual void setPosition(glm::vec3 newPosition) {
-				glm::mat4 identity = glm::mat4(1.f); 
-
-				this->displayMatrix = std::make_unique<glm::mat4>(glm::translate(identity, newPosition));
-				this->position = std::make_unique<glm::vec3>(newPosition); 
+				glm::mat4 updatedMatrix = *this->displayMatrix;
+				this->displayMatrix = std::make_unique<glm::mat4>(
+					updatedMatrix[0], 
+					updatedMatrix[1], 
+					updatedMatrix[2],
+					glm::vec4{newPosition.x, newPosition.y, newPosition.z, 1.0f}
+				);
 			}
 
 			glm::vec3 getPosition() {
@@ -84,7 +86,6 @@ namespace star {
 			}
 
 		protected:
-			std::unique_ptr<glm::vec3> position;
 			std::unique_ptr<glm::mat4> displayMatrix;
 
 		private:

@@ -38,5 +38,12 @@ namespace star{
             STAR_LEFT,
             STAR_RIGHT
         };
+
+        namespace LightType {
+            enum LightType {
+                point,
+                directional
+            };
+        }
     }
 }

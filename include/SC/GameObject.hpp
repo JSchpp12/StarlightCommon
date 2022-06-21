@@ -23,7 +23,7 @@ namespace star{
         class GameObject : public Entity{
         public:
             GameObject(std::unique_ptr<std::vector<Vertex>> vertexList, std::unique_ptr<std::vector<uint32_t>> indiciesList,
-                glm::vec3 scale,
+                glm::vec3 position, glm::vec3 scale,
                 Handle& vertShaderHandle,
                 Handle& fragShaderHandle,
                 Handle& textureHandle) :
@@ -35,6 +35,7 @@ namespace star{
                 texture(std::make_unique<Handle>(textureHandle))
             {
                 this->setScale(scale); 
+                this->setPosition(position);
             } 
 
             virtual ~GameObject() {}; 
