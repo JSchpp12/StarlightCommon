@@ -2,7 +2,6 @@
 
 namespace star{
     namespace common{
-
         enum Shader_File_Type{
             spirv, 
             glsl
@@ -39,8 +38,13 @@ namespace star{
             STAR_RIGHT
         };
 
-        namespace LightType {
-            enum LightType {
+        namespace Type {
+            enum Entity {
+                model, 
+                light
+            };
+
+            enum Light {
                 point,
                 directional
             };

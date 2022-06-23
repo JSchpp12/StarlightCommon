@@ -10,9 +10,10 @@ namespace star {
 	namespace common {
 		class Entity {
 		public:
-			Entity() : 
-				displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f)))
-			{
+			Entity() : displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f))) { }
+
+			Entity(glm::vec3 position) : displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f))) {
+				this->setPosition(position); 
 			}
 
 			virtual void setPosition(glm::vec3 newPosition) {

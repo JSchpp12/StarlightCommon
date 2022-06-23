@@ -14,18 +14,19 @@
 
 namespace star{
     namespace common{
-        template<typename shaderManager, typename objectManager, typename textureManager>
+        template<typename shaderManager, typename objectManager, typename textureManager, typename lightManager>
         class Application{
         public: 
-            Application(ConfigFile* configFile, std::vector<common::Handle>* objectList, shaderManager* shaderManager, objectManager* objectManager, textureManager* textureManager, Camera* inCamera) :
+            Application(ConfigFile* configFile, std::vector<common::Handle>* objectList, shaderManager* shaderManager, 
+                objectManager* objectManager, textureManager* textureManager, lightManager* lightManager,
+                Camera* inCamera) :
                 configFile(configFile), 
                 objectList(objectList),
                 shaderManager(shaderManager), 
                 objectManager(objectManager), 
                 textureManager(textureManager), 
-                camera(inCamera)
-            { 
-            }
+                lightManager(lightManager),
+                camera(inCamera){ }
 
             virtual ~Application() {}; 
 
@@ -39,6 +40,7 @@ namespace star{
             shaderManager* shaderManager;
             objectManager* objectManager;
             textureManager* textureManager;
+            lightManager* lightManager; 
             std::vector<common::Handle>* objectList; 
             Camera* camera; 
 

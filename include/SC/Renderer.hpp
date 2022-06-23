@@ -12,7 +12,9 @@ namespace star{
     namespace common{
         class Renderer{
         public:
-            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<GameObject>* objectManager, common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, const std::vector<Handle>* objectHandles) : 
+            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<GameObject>* objectManager, 
+                common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, 
+                const std::vector<Handle>* objectHandles) : 
                 configFile(configFile),
                 shaderManager(shaderManager), 
                 objectManager(objectManager), 
@@ -39,9 +41,9 @@ namespace star{
                 struct GlobalUniformBufferObject {
                     alignas(16) glm::mat4 proj;
                     alignas(16) glm::mat4 view;
-                    alignas(16) glm::vec4 ambientLightColor{1.0f, 1.0f, 1.0f, 0.0075f};
-                    glm::vec3 lightPosition{-2.0f, 0.4f, 0.0f};
-                    alignas(16) glm::vec4 lightColor{1.0f, 1.0f, 1.0f, 0.5f};               //w is light intensity
+                    alignas(16) glm::vec4 ambientLightColor;
+                    glm::vec3 lightPosition;
+                    alignas(16) glm::vec4 lightColor;               //w is light intensity
                 };
 
                 struct UniformBufferObject {
