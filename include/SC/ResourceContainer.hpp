@@ -48,6 +48,7 @@ namespace star{
             Handle AddResource(std::unique_ptr<T> resource){
                 Handle newHandle{this->container.size()}; 
                 this->container.push_back(std::move(resource)); 
+                return common::Handle{ this->container.size() }; 
             }
 
             Handle AddFileResource(const std::string path, std::unique_ptr<T>& resource){
