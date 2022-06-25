@@ -45,16 +45,6 @@ namespace star{
                     glm::vec3 lightPosition;
                     alignas(16) glm::vec4 lightColor;               //w is light intensity
                 };
-
-                struct UniformBufferObject {
-                    alignas(16) glm::mat4 modelMatrix; 
-                    alignas(16) glm::mat4 normalMatrix; 
-                };
-
-                struct ObjectPushConstants {
-                    int modelIndex; 
-                };
-
         private: 
 
         }; 
