@@ -58,10 +58,6 @@ namespace star{
             //    return *this->scaleAmt;
             //}
 
-            void setScale(glm::vec3 scale) {
-                this->displayMatrix = std::make_unique<glm::mat4>(glm::scale(*this->displayMatrix, scale)); 
-            }
-
             glm::mat4 getNormalMatrix() {
                 return glm::inverseTranspose(*this->displayMatrix); 
             }

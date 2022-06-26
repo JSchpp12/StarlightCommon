@@ -16,6 +16,12 @@ namespace star {
 				this->setPosition(position); 
 			}
 
+			Entity(glm::vec3 position, glm::vec3 scale) : displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f)))
+			{
+				this->setPosition(position); 
+				this->setScale(scale); 
+			}
+
 			virtual void setPosition(glm::vec3 newPosition) {
 				glm::mat4 updatedMatrix = *this->displayMatrix;
 				this->displayMatrix = std::make_unique<glm::mat4>(
@@ -84,6 +90,10 @@ namespace star {
 				glm::normalize(rotationVector);
 
 				this->displayMatrix = std::make_unique<glm::mat4>(glm::rotate(*this->displayMatrix, radians, rotationVector));
+			}
+
+			void setScale(glm::vec3 scale) {
+				this->displayMatrix = std::make_unique<glm::mat4>(glm::scale(*this->displayMatrix, scale));
 			}
 
 		protected:
