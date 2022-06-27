@@ -42,8 +42,7 @@ namespace star{
                     alignas(16) glm::mat4 proj;
                     alignas(16) glm::mat4 view;
                     alignas(16) glm::vec4 ambientLightColor;
-                    glm::vec3 lightPosition;
-                    alignas(16) glm::vec4 lightColor;               //w is light intensity
+                    uint32_t numLights;                             //number of lights in render
                 };
         private: 
 
