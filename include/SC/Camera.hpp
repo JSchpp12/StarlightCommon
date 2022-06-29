@@ -57,6 +57,16 @@ namespace star {
 				);
 			}
 
+			glm::mat4 getInverseViewMatrix() {
+				return glm::inverse(
+					glm::lookAt(
+						*this->position,
+						*this->position + (*this->lookDirection),
+						*this->upVector
+					)
+				);
+			}
+
 			void setLookDirection(glm::vec3 newLookPoint) {
 				this->lookDirection = std::make_unique<glm::vec3>(newLookPoint); 
 			}
