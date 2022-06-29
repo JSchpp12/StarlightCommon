@@ -14,16 +14,16 @@
 
 namespace star{
     namespace common{
-        template<typename shaderManager, typename objectManager, typename textureManager, typename lightManager>
+        template<typename shaderManager, typename textureManager, typename lightManager, typename sceneBuilder>
         class Application{
         public: 
             Application(ConfigFile* configFile, std::vector<common::Handle>* objectList, shaderManager* shaderManager, 
-                objectManager* objectManager, textureManager* textureManager, lightManager* lightManager,
+                textureManager* textureManager, lightManager* lightManager, sceneBuilder& sceneManager,
                 Camera* inCamera) :
                 configFile(configFile), 
                 objectList(objectList),
                 shaderManager(shaderManager), 
-                objectManager(objectManager), 
+                sceneBuilder(sceneManager),
                 textureManager(textureManager), 
                 lightManager(lightManager),
                 camera(inCamera){ }
@@ -37,8 +37,8 @@ namespace star{
             ConfigFile* configFile; 
 
         protected: 
+            sceneBuilder& sceneBuilder;
             shaderManager* shaderManager;
-            objectManager* objectManager;
             textureManager* textureManager;
             lightManager* lightManager; 
             std::vector<common::Handle>* objectList; 
