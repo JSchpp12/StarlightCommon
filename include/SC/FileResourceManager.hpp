@@ -1,33 +1,36 @@
 #pragma once 
 
-#include "ResourceContainer.hpp"
+#include "ConfigFile.hpp"
 #include "Handle.hpp"
+#include "MemoryManager.hpp"
+#include "FileResourceContainer.hpp"
+
+#include <string> 
+#include <memory>
+#include <map>
+#include <vector> 
 
 namespace star{
     namespace common{
         template<typename T>
-        class FileResourceManager{
+        class FileResourceManager : public MemoryManager<T>{
         public:
-            virtual ~FileResourceManager() {}; 
-            
-            // virtual Handle Add(T) = 0; 
-            virtual Handle Add(const std::string& pathToFile) = 0; 
+            virtual ~FileResourceManager(){}; 
 
-            //For managers that have more than one default, this must be overridden
-            virtual T* Get(const Handle& handle) {
-                return this->fileContainer.GetResource(handle); 
+            virtual common::Handle add(const std::string& path) = 0; 
+
+            virtual T* get(const common::Handle& handle) {
+                return this->container.get(handle); 
             }
-
-            virtual size_t count() {
-                return this->fileContainer.numberOfUniqueResources(); 
-            }
-
-            //virtual Handle getHandleAt(const size_t& index) {
-            //    return this->fileContainer.getHandleAt(index); 
-            //}
 
         protected:
-            common::ResourceContainer<T> fileContainer;
+            FileResourceContainer<T> fileContainer;
+
+            virtual void addResource(const std::string& path, std::unique_ptr<T> newResource, common::Handle& newHandle) {
+                newHandle.containerIndex = this->container.size(); 
+                this->container.add(std::move(newResource)); 
+                this->fileContainer.add(path, newHandle); 
+            }
 
         private: 
 
