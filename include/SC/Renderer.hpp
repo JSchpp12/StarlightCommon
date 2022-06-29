@@ -41,6 +41,7 @@ namespace star{
                 struct GlobalUniformBufferObject {
                     alignas(16) glm::mat4 proj;
                     alignas(16) glm::mat4 view;
+                    alignas(16) glm::mat4 inverseView;              //used to extrapolate camera position, can be used to convert from camera to world space
                     alignas(16) glm::vec4 ambientLightColor;
                     uint32_t numLights;                             //number of lights in render
                 };
