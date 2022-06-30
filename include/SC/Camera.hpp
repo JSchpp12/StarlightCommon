@@ -17,7 +17,7 @@ namespace star {
 		public:
 			Camera() :
 				lookDirection(std::make_unique<glm::vec3>(glm::vec3{ 0.f, 0.f, 0.f })),
-				lookAtPoint(std::make_unique<glm::vec3>(glm::vec3{0.f, 0.f, 0.f})), 
+				lookAtPoint(std::make_unique<glm::vec3>(glm::vec3{0.f, 0.5f, 0.f})), 
 				upVector(std::make_unique<glm::vec3>(glm::vec3{ 0.0f, 1.0f, 0.0f })),
 				forwardVector(std::make_unique<glm::vec3>(glm::vec3{0.f, 0.f, 0.f})), 
 				fieldOfView(std::make_unique<float>(45.f)),
@@ -25,7 +25,7 @@ namespace star {
 				farClippingPlaneDistance(std::make_unique<float>(10.f))
 			{
 				//set look direction towards origin->				auto origin = glm::vec3(0.f); 
-				this->setPosition(glm::vec3{ 0.f, 0.f, 2.f });
+				this->setPosition(glm::vec3{ 0.f, 0.5f, 3.f });
 			}
 
 
@@ -54,6 +54,16 @@ namespace star {
 					*this->position,
 					*this->position + (*this->lookDirection),
 					*this->upVector
+				);
+			}
+
+			glm::mat4 getInverseViewMatrix() {
+				return glm::inverse(
+					glm::lookAt(
+						*this->position,
+						*this->position + (*this->lookDirection),
+						*this->upVector
+					)
 				);
 			}
 

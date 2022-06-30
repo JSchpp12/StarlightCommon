@@ -10,17 +10,26 @@ namespace star {
 	namespace common {
 		class Entity {
 		public:
-			Entity() : 
-				position(std::make_unique<glm::vec3>(glm::vec4(0.f))), 
-				displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f)))
+			Entity() : displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f))) { }
+
+			Entity(glm::vec3 position) : displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f))) {
+				this->setPosition(position); 
+			}
+
+			Entity(glm::vec3 position, glm::vec3 scale) : displayMatrix(std::make_unique<glm::mat4>(glm::mat4(1.f)))
 			{
+				this->setPosition(position); 
+				this->setScale(scale); 
 			}
 
 			virtual void setPosition(glm::vec3 newPosition) {
-				glm::mat4 identity = glm::mat4(1.f); 
-
-				this->displayMatrix = std::make_unique<glm::mat4>(glm::translate(identity, newPosition));
-				this->position = std::make_unique<glm::vec3>(newPosition); 
+				glm::mat4 updatedMatrix = *this->displayMatrix;
+				this->displayMatrix = std::make_unique<glm::mat4>(
+					updatedMatrix[0], 
+					updatedMatrix[1], 
+					updatedMatrix[2],
+					glm::vec4{newPosition.x, newPosition.y, newPosition.z, 1.0f}
+				);
 			}
 
 			glm::vec3 getPosition() {
@@ -83,8 +92,11 @@ namespace star {
 				this->displayMatrix = std::make_unique<glm::mat4>(glm::rotate(*this->displayMatrix, radians, rotationVector));
 			}
 
+			void setScale(glm::vec3 scale) {
+				this->displayMatrix = std::make_unique<glm::mat4>(glm::scale(*this->displayMatrix, scale));
+			}
+
 		protected:
-			std::unique_ptr<glm::vec3> position;
 			std::unique_ptr<glm::mat4> displayMatrix;
 
 		private:

@@ -12,7 +12,9 @@ namespace star{
     namespace common{
         class Renderer{
         public:
-            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<GameObject>* objectManager, common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, const std::vector<Handle>* objectHandles) : 
+            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<GameObject>* objectManager, 
+                common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, 
+                const std::vector<Handle>* objectHandles) : 
                 configFile(configFile),
                 shaderManager(shaderManager), 
                 objectManager(objectManager), 
@@ -39,16 +41,10 @@ namespace star{
                 struct GlobalUniformBufferObject {
                     alignas(16) glm::mat4 proj;
                     alignas(16) glm::mat4 view;
+                    alignas(16) glm::mat4 inverseView;              //used to extrapolate camera position, can be used to convert from camera to world space
+                    alignas(16) glm::vec4 ambientLightColor;
+                    uint32_t numLights;                             //number of lights in render
                 };
-
-                struct UniformBufferObject {
-                    alignas(16) glm::mat4 model; 
-                };
-
-                struct ObjectPushConstants {
-                    int modelIndex; 
-                };
-
         private: 
 
         }; 

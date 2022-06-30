@@ -2,7 +2,6 @@
 
 namespace star{
     namespace common{
-
         enum Shader_File_Type{
             spirv, 
             glsl
@@ -23,7 +22,8 @@ namespace star{
             defaultHandle,
             shader, 
             object, 
-            texture
+            texture, 
+            material
         }; 
 
         enum Buttons {
@@ -38,5 +38,17 @@ namespace star{
             STAR_LEFT,
             STAR_RIGHT
         };
+
+        namespace Type {
+            enum Entity {
+                model, 
+                light
+            };
+
+            enum Light {
+                point,
+                directional
+            };
+        }
     }
 }
