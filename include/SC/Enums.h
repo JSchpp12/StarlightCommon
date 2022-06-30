@@ -22,7 +22,8 @@ namespace star{
             defaultHandle,
             shader, 
             object, 
-            texture
+            texture, 
+            material
         }; 
 
         enum Buttons {
