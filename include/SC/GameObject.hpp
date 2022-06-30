@@ -25,10 +25,10 @@ namespace star{
         public:
             GameObject(std::unique_ptr<std::vector<Vertex>> vertexList, std::unique_ptr<std::vector<uint32_t>> indiciesList,
                 glm::vec3 position, glm::vec3 scale, 
-                common::Material& material, Handle& vertShaderHandle,
+                common::Material* material, Handle& vertShaderHandle,
                 Handle& fragShaderHandle, Handle& textureHandle) :
                 Entity(), 
-                material(std::make_unique<common::Material>(material)),
+                material(material),
                 vertexList(std::move(vertexList)),
                 indiciesList(std::move(indiciesList)),
                 vertShader(std::make_unique<Handle>(vertShaderHandle)),
@@ -69,7 +69,7 @@ namespace star{
 
             std::vector<uint32_t>* getIndicies() { return this->indiciesList.get(); }
 
-            Material* getMaterial() { return this->material.get(); }
+            Material* getMaterial() { return this->material; }
 
         protected: 
 
@@ -80,7 +80,7 @@ namespace star{
             std::unique_ptr<Handle> vertShader, fragShader, texture; 
             std::unique_ptr<std::vector<common::Vertex>> vertexList;
             std::unique_ptr<std::vector<uint32_t>> indiciesList;
-            std::unique_ptr<common::Material> material; 
+            common::Material* material; 
         };
     }
 }
