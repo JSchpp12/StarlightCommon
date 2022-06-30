@@ -22,6 +22,7 @@ SET(${PROJECT_NAME}_HEDERS
     "include/Stage.h"
     "include/RenderObject.hpp"
     "include/Handle.hpp"
+    "include/Interactivity.hpp"
 )
 
 #check for needed includes 
@@ -36,10 +37,9 @@ add_library(${PROJECT_NAME} INTERFACE)
 #provide alias for subdirectory
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-#add_library(${PROJECT_NAME} INTERFACE ${${PROJECT_NAME}_HEADERS})
 target_include_directories(${PROJECT_NAME} 
     INTERFACE
-        ${glm_SOURCE_DIR}
+        ${glm_INCLUDE_DIR}
         ${GLFW_INCLUDE_DIR}
         # ${CMAKE_CURRENT_SOURCE_DIR}/include
         $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
