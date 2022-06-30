@@ -13,13 +13,18 @@ namespace common {
 	public:
 		virtual ~MemoryManager() { };
 
-		common::Handle add(std::unique_ptr<T> newResource) { return this->container.add(std::move(newResource)); }
-
 	protected:
-		ResourceContainer<T> container; 
+		void addResource(std::unique_ptr<T> newResource, common::Handle& newHandle){
+			newHandle.containerIndex = this->container.size(); 
+			this->container.add(std::move(newResource)); 
+		}
+
+		T* getResource(const common::Handle& handle) {
+			return this->container.get(handle);
+		}
 
 	private: 
-
+		ResourceContainer<T> container;
 
 	};
 }

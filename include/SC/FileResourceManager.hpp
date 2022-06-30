@@ -20,15 +20,18 @@ namespace star{
             virtual common::Handle add(const std::string& path) = 0; 
 
             virtual T* get(const common::Handle& handle) {
-                return this->container.get(handle); 
+                return this->MemoryManager<T>::getResource(handle); 
             }
 
         protected:
             FileResourceContainer<T> fileContainer;
 
+            virtual void addResource(std::unique_ptr<T> newResource, common::Handle& newHandle) {
+                this->MemoryManager<T>::addResource(std::move(newResource), newHandle); 
+            }
+
             virtual void addResource(const std::string& path, std::unique_ptr<T> newResource, common::Handle& newHandle) {
-                newHandle.containerIndex = this->container.size(); 
-                this->container.add(std::move(newResource)); 
+                this->MemoryManager<T>::addResource(std::move(newResource), newHandle);
                 this->fileContainer.add(path, newHandle); 
             }
 
