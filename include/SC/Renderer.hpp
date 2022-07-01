@@ -1,9 +1,10 @@
 #pragma once 
 #include "FileResourceManager.hpp"
 #include "Shader.h"
-#include "Object.hpp"
+#include "GameObject.hpp"
 #include "Texture.hpp"
 #include "ConfigFile.hpp"
+#include "Camera.hpp"
 
 #include <glm/glm.hpp>
 
@@ -11,11 +12,14 @@ namespace star{
     namespace common{
         class Renderer{
         public:
-            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<Object>* objectManager, common::FileResourceManager<Texture>* textureManager, const std::vector<Handle>* objectHandles) : 
+            Renderer(common::ConfigFile* configFile, common::FileResourceManager<Shader>* shaderManager, common::FileResourceManager<GameObject>* objectManager, 
+                common::FileResourceManager<Texture>* textureManager, common::Camera* inCamera, 
+                const std::vector<Handle>* objectHandles) : 
                 configFile(configFile),
                 shaderManager(shaderManager), 
                 objectManager(objectManager), 
                 textureManager(textureManager), 
+                camera(inCamera),
                 objectList(objectHandles) { }
 
             virtual ~Renderer() {}; 
@@ -29,16 +33,18 @@ namespace star{
         protected: 
                 common::ConfigFile* configFile; 
                 common::FileResourceManager<Shader>* shaderManager; 
-                common::FileResourceManager<Object>* objectManager; 
+                common::FileResourceManager<GameObject>* objectManager;
                 common::FileResourceManager<Texture>* textureManager;
+                common::Camera* camera; 
                 const std::vector<common::Handle>* objectList; 
 
-                struct UniformBufferObject {
-                    alignas(16) glm::mat4 model; 
-                    alignas(16) glm::mat4 view; 
-                    alignas(16) glm::mat4 proj; 
+                struct GlobalUniformBufferObject {
+                    alignas(16) glm::mat4 proj;
+                    alignas(16) glm::mat4 view;
+                    alignas(16) glm::mat4 inverseView;              //used to extrapolate camera position, can be used to convert from camera to world space
+                    alignas(16) glm::vec4 ambientLightColor;
+                    uint32_t numLights;                             //number of lights in render
                 };
-
         private: 
 
         }; 

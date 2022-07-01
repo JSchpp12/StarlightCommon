@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "ConfigFile.hpp"
 #include "Handle.hpp"
+#include "Camera.hpp"
 
 #include <GLFW/glfw3.h>
 
@@ -13,31 +14,35 @@
 
 namespace star{
     namespace common{
-        template<typename shaderManagerType, typename objectManagerType, typename textureManagerType>
+        template<typename shaderManagerT, typename textureManagerT, typename lightManagerT, typename sceneBuilderT>
         class Application{
         public: 
-            Application(ConfigFile* configFile, std::vector<common::Handle>* objectList, shaderManagerType* shaderManager, objectManagerType* objectManager, textureManagerType* textureManager) :
+            Application(ConfigFile* configFile, std::vector<common::Handle>* objectList, shaderManagerT* shaderManager, 
+                textureManagerT* textureManager, lightManagerT* lightManager, sceneBuilderT& sceneManager,
+                Camera* inCamera) :
                 configFile(configFile), 
                 objectList(objectList),
                 shaderManager(shaderManager), 
-                objectManager(objectManager), 
-                textureManager(textureManager)
-            { 
-            }
+                sceneBuilder(sceneManager),
+                textureManager(textureManager), 
+                lightManager(lightManager),
+                camera(inCamera){ }
 
             virtual ~Application() {}; 
 
             virtual void Load() = 0; 
 
-            virtual void Update() = 0; 
+            virtual void Update() = 0;  
 
             ConfigFile* configFile; 
 
         protected: 
-            shaderManagerType* shaderManager;
-            objectManagerType* objectManager;
-            textureManagerType* textureManager;
+            sceneBuilderT& sceneBuilder;
+            shaderManagerT* shaderManager;
+            textureManagerT* textureManager;
+            lightManagerT* lightManager; 
             std::vector<common::Handle>* objectList; 
+            Camera* camera; 
 
         private: 
 

@@ -12,18 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_MACOSX_RPATH 1)
 cmake_policy(SET CMP0076 NEW)
 
-SET(${PROJECT_NAME}_HEDERS
-    "include/Enums.h" 
-    "include/Shader.h" 
-    "include/ResourceContainer.hpp" 
-    "include/Media.h" 
-    "include/ConfigFile.h" 
-    "include/FileHelpers.h" 
-    "include/Stage.h"
-    "include/RenderObject.hpp"
-    "include/Handle.hpp"
-)
-
 #check for needed includes 
 if(DEFINED GLFW_SOURCE_DIR)
     set(GLFW_INCLUDE_DIR ${GLFW_SOURCE_DIR}/include)
@@ -36,10 +24,9 @@ add_library(${PROJECT_NAME} INTERFACE)
 #provide alias for subdirectory
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-#add_library(${PROJECT_NAME} INTERFACE ${${PROJECT_NAME}_HEADERS})
 target_include_directories(${PROJECT_NAME} 
     INTERFACE
-        ${glm_SOURCE_DIR}
+        ${glm_INCLUDE_DIR}
         ${GLFW_INCLUDE_DIR}
         # ${CMAKE_CURRENT_SOURCE_DIR}/include
         $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
