@@ -12,19 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_MACOSX_RPATH 1)
 cmake_policy(SET CMP0076 NEW)
 
-SET(${PROJECT_NAME}_HEDERS
-    "include/Enums.h" 
-    "include/Shader.h" 
-    "include/ResourceContainer.hpp" 
-    "include/Media.h" 
-    "include/ConfigFile.h" 
-    "include/FileHelpers.h" 
-    "include/Stage.h"
-    "include/RenderObject.hpp"
-    "include/Handle.hpp"
-    "include/Interactivity.hpp"
-)
-
 #check for needed includes 
 if(DEFINED GLFW_SOURCE_DIR)
     set(GLFW_INCLUDE_DIR ${GLFW_SOURCE_DIR}/include)
