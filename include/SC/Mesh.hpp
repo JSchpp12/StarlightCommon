@@ -53,9 +53,8 @@ namespace star{
             std::unique_ptr<std::vector<Vertex>> verticies; 
             std::unique_ptr<std::vector<uint32_t>> indicies; 
             common::Handle texture; 
-            //TODO: add this back
+            //TODO: add this back -- along with moving an image to the material
             //common::Handle material; 
-
         }; 
     }
 }
