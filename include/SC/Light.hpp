@@ -42,7 +42,7 @@ namespace common {
 		}
 
 		void setLinkedObjectHandle(common::Handle handle) { this->linkedObjectHandle = std::make_unique<common::Handle>(handle); }
-		void setLinkedObject(common::GameObject* object) { this->linkedObject = object; }
+		void setLinkedObject(common::GameObject& object) { this->linkedObject = &object; }
 		common::Handle getLinkedObjectHandle() { return *this->linkedObjectHandle; }
 		Type::Light getType() { return this->type; }
 		glm::vec4 getColor() { return this->color; }

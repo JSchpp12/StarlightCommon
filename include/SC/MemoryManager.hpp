@@ -19,9 +19,11 @@ namespace common {
 			this->container.add(std::move(newResource)); 
 		}
 
-		T* getResource(const common::Handle& handle) {
+		T& getResource(const common::Handle& handle) {
 			return this->container.get(handle);
 		}
+
+		size_t size() { return this->container.size(); }
 
 	private: 
 		ResourceContainer<T> container;
