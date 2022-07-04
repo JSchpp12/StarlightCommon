@@ -19,7 +19,7 @@ namespace star{
 
             virtual common::Handle add(const std::string& path) = 0; 
 
-            virtual T* get(const common::Handle& handle) {
+            virtual T& get(const common::Handle& handle) {
                 return this->MemoryManager<T>::getResource(handle); 
             }
 

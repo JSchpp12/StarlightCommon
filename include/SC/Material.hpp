@@ -1,6 +1,9 @@
 #pragma once 
+#include "Material.hpp"
 
 #include <glm/glm.hpp>
+
+#include <memory>
 
 namespace star {
 namespace common {

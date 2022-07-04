@@ -30,6 +30,11 @@ namespace star{
                 return pathToFile.substr(pathToFile.find_last_of("/\\") + 1); 
             }
 
+            static std::string GetBaseFileDirectory(const std::string& pathToFile) {
+                size_t found = pathToFile.find_last_of("/\\"); 
+                return pathToFile.substr(0, found) + "/";
+            }
+
             //Get file type of provided file -- shaders
             static Shader_File_Type GetFileType(const std::string& pathToFile){
                 auto posOfExt = pathToFile.find_last_of('.'); 

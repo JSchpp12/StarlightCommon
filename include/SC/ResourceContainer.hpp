@@ -25,12 +25,12 @@ namespace star{
                 return newHandle;
             }
 
-            virtual T* get(const Handle& handle) {
+            virtual T& get(const Handle& handle) {
                 if (handle.containerIndex > container.size()) {
                     throw std::runtime_error("Requested a resource that is outside the range of the container");
                 }
 
-                return container[handle.containerIndex].get();
+                return *container[handle.containerIndex];
             }
 
         protected:

@@ -7,6 +7,7 @@
 #include "Handle.hpp"
 #include "Material.hpp"
 #include "Vertex.hpp"
+#include "Mesh.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -18,22 +19,20 @@
 
 #include <queue>
 #include <memory>
+#include <vector>
 
 namespace star{
     namespace common{
         class GameObject : public Entity{
         public:
-            GameObject(std::unique_ptr<std::vector<Vertex>> vertexList, std::unique_ptr<std::vector<uint32_t>> indiciesList,
-                glm::vec3 position, glm::vec3 scale, 
-                common::Material* material, Handle& vertShaderHandle,
-                Handle& fragShaderHandle, Handle& textureHandle) :
+            GameObject(glm::vec3 position, glm::vec3 scale, common::Material* material, 
+                Handle& vertShaderHandle, Handle& fragShaderHandle,
+                std::vector<std::unique_ptr<common::Mesh>> meshes) :
                 Entity(), 
                 material(material),
-                vertexList(std::move(vertexList)),
-                indiciesList(std::move(indiciesList)),
+                meshes(std::move(meshes)),
                 vertShader(std::make_unique<Handle>(vertShaderHandle)),
-                fragShader(std::make_unique<Handle>(fragShaderHandle)),
-                texture(std::make_unique<Handle>(textureHandle))
+                fragShader(std::make_unique<Handle>(fragShaderHandle))
             {
                 this->setScale(scale); 
                 this->setPosition(position);
@@ -42,44 +41,19 @@ namespace star{
             virtual ~GameObject() {}; 
 
             //get the handle for the vertex shader 
-            Handle getVertShader() {
-                return *this->vertShader.get(); 
-            }
-
+            Handle getVertShader() { return *this->vertShader.get(); }
             //get the handle for the fragment shader
-            Handle getFragShader() {
-                return *this->fragShader.get();
-            }
-
-            Handle getTexture() {
-                return *this->texture.get(); 
-            }
-
-            //glm::vec3 getScale() {
-            //    return *this->scaleAmt;
-            //}
-
-            glm::mat4 getNormalMatrix() {
-                return glm::inverseTranspose(*this->displayMatrix); 
-            }
-
-            //TODO: implement set position
-
-            std::vector<Vertex>* getVerticies() { return this->vertexList.get(); }
-
-            std::vector<uint32_t>* getIndicies() { return this->indiciesList.get(); }
-
+            Handle getFragShader() { return *this->fragShader.get(); }
+            const std::vector<std::unique_ptr<common::Mesh>>& getMeshes() { return this->meshes; }
+            glm::mat4 getNormalMatrix() { return glm::inverseTranspose(*this->displayMatrix); }
             Material* getMaterial() { return this->material; }
 
         protected: 
 
         private: 
             //is the mmodel matrix updated with most recent changes 
-            bool modelMatrixValid = true; 
-
-            std::unique_ptr<Handle> vertShader, fragShader, texture; 
-            std::unique_ptr<std::vector<common::Vertex>> vertexList;
-            std::unique_ptr<std::vector<uint32_t>> indiciesList;
+            std::unique_ptr<Handle> vertShader, fragShader; 
+            std::vector<std::unique_ptr<common::Mesh>> meshes; 
             common::Material* material; 
         };
     }
