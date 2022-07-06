@@ -19,6 +19,7 @@ namespace star{
         }; 
 
         enum Handle_Type{
+            null,
             defaultHandle,
             shader, 
             object, 
