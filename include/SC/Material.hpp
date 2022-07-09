@@ -22,7 +22,7 @@ namespace common {
 		glm::vec4 surfaceColor{0.5f, 0.5f, 0.5f, 1.0f};
 		glm::vec4 highlightColor{ 0.5f, 0.5f, 0.5f, 1.0f };
 		int shinyCoefficient = 1; 
-		Handle texture = common::Handle{0, Handle_Type::null};
+		Handle texture = common::Handle{0, Handle_Type::texture};
 
 	protected:
 
