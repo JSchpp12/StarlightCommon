@@ -25,11 +25,9 @@ namespace star{
     namespace common{
         class GameObject : public Entity{
         public:
-            GameObject(glm::vec3 position, glm::vec3 scale, common::Material* material, 
-                Handle& vertShaderHandle, Handle& fragShaderHandle,
-                std::vector<std::unique_ptr<common::Mesh>> meshes) :
+            GameObject(glm::vec3 position, glm::vec3 scale, Handle& vertShaderHandle,
+                Handle& fragShaderHandle, std::vector<std::unique_ptr<common::Mesh>> meshes) :
                 Entity(), 
-                material(material),
                 meshes(std::move(meshes)),
                 vertShader(std::make_unique<Handle>(vertShaderHandle)),
                 fragShader(std::make_unique<Handle>(fragShaderHandle))
@@ -46,7 +44,6 @@ namespace star{
             Handle getFragShader() { return *this->fragShader.get(); }
             const std::vector<std::unique_ptr<common::Mesh>>& getMeshes() { return this->meshes; }
             glm::mat4 getNormalMatrix() { return glm::inverseTranspose(*this->displayMatrix); }
-            Material* getMaterial() { return this->material; }
 
         protected: 
 
@@ -54,7 +51,6 @@ namespace star{
             //is the mmodel matrix updated with most recent changes 
             std::unique_ptr<Handle> vertShader, fragShader; 
             std::vector<std::unique_ptr<common::Mesh>> meshes; 
-            common::Material* material; 
         };
     }
 }
