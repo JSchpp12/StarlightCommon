@@ -6,8 +6,7 @@
 #include <memory>
 #include <vector>
 
-namespace star {
-namespace common {
+namespace star::common{
 	template<typename T>
 	class MemoryManager {
 	public:
@@ -38,5 +37,4 @@ namespace common {
 
 
 	};
-}
 }
