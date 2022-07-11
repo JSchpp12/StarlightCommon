@@ -15,6 +15,7 @@ namespace star{
         template<typename T>
         class FileResourceManager : public MemoryManager<T>{
         public:
+            FileResourceManager() : MemoryManager<T>() { }
             virtual ~FileResourceManager(){}; 
 
             virtual common::Handle add(const std::string& path) = 0; 
@@ -35,7 +36,10 @@ namespace star{
                 this->fileContainer.add(path, newHandle); 
             }
 
+            virtual Handle createAppropriateHandle() = 0; 
+
         private: 
+
 
         };
     }
