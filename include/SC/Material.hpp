@@ -6,23 +6,33 @@
 
 #include <memory>
 
-namespace star {
-namespace common {
-	class Material {
+namespace star::common{
+	struct Material {
 	public:
 		Material() = default; 
-		Material(glm::vec4 surfaceColor, glm::vec4 highlightColor, int shinyCoefficient) :
-			surfaceColor(surfaceColor), highlightColor(highlightColor), shinyCoefficient(shinyCoefficient){ }
+		Material(const glm::vec4& surfaceColor, const glm::vec4& highlightColor, const glm::vec4& ambient,
+			const glm::vec4& diffuse, const glm::vec4& specular, 
+			const int& shiny) : 
+			surfaceColor(surfaceColor), highlightColor(highlightColor), 
+			ambient(ambient), diffuse(diffuse), 
+			specular(specular), shinyCoefficient(shiny) { }
 
-		Material(glm::vec4 surfaceColor, glm::vec4 highlightColor, int shinyCoefficient, Handle texture) :
-			surfaceColor(surfaceColor), highlightColor(highlightColor), shinyCoefficient(shinyCoefficient){
-			this->texture = texture; 
+		Material(const glm::vec4& surfaceColor, const glm::vec4& highlightColor, const glm::vec4& ambient, 
+			const glm::vec4& diffuse, const glm::vec4& specular, 
+			const int& shiny, common::Handle& textureHandle) :
+			surfaceColor(surfaceColor), highlightColor(highlightColor),
+			ambient(ambient), diffuse(diffuse),
+			specular(specular), shinyCoefficient(shiny){
+			this->texture = textureHandle;
 		}
 
 		glm::vec4 surfaceColor{0.5f, 0.5f, 0.5f, 1.0f};
 		glm::vec4 highlightColor{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 ambient{ 0.5f, 0.5f, 0.5f, 1.0f }; 
+		glm::vec4 diffuse{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 specular{ 0.5f, 0.5f, 0.5f, 1.0f }; 
 		int shinyCoefficient = 1; 
-		Handle texture = common::Handle{0, Handle_Type::texture};
+		Handle texture = Handle{0, Handle_Type::texture};
 
 	protected:
 
@@ -31,5 +41,4 @@ namespace common {
 
 
 	};
-}
 }

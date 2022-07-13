@@ -14,13 +14,15 @@ namespace star::common{
 		/// Init manager with a default material if desired.
 		/// </summary>
 		/// <param name="defaultResource"></param>
-		MemoryManager(std::unique_ptr<T> defaultResource) {
-			Handle defaultHandle = this->createAppropriateHandle(); 
-			this->addResource(std::move(defaultResource), defaultHandle);
-			this->defaultHandle = std::make_unique<Handle>(defaultHandle); 
-			this->defaultResource = &this->getResource(defaultHandle);
-		}
+		MemoryManager(std::unique_ptr<T> defaultResource){ }
 		virtual ~MemoryManager() { };
+
+		Handle addResource(std::unique_ptr<T> newResource) {
+			Handle newHandle = this->createAppropriateHandle();
+			newHandle.containerIndex = this->container.size();
+			this->container.add(std::move(newResource));
+			return newHandle;
+		}
 
 		T* getDefault() {
 			if (this->defaultResource != nullptr)
@@ -28,17 +30,20 @@ namespace star::common{
 			throw std::runtime_error("No default resource was set");
 		}
 
+		common::Handle getDefaultHandle() { return *this->defaultHandle; }
+
 	protected:
 		//Inherited classes should be permitted to inherit from this class without default material reqs. It is expected these classes will handle their own defaults.
 		MemoryManager() = default;
 
+		void init(std::unique_ptr<T> defaultResource) {
+			Handle defaultHandle = this->addResource(std::move(defaultResource));
+			this->defaultHandle = std::make_unique<Handle>(defaultHandle);
+			this->defaultResource = &this->getResource(defaultHandle);
+		}
+
 		T* defaultResource = nullptr;
 		std::unique_ptr<Handle> defaultHandle;
-
-		void addResource(std::unique_ptr<T> newResource, common::Handle& newHandle){
-			newHandle.containerIndex = this->container.size(); 
-			this->container.add(std::move(newResource)); 
-		}
 
 		T& getResource(const common::Handle& handle) {
 			return this->container.get(handle);
@@ -47,7 +52,7 @@ namespace star::common{
 		/// Create appropriate handle for this manager type 
 		/// </summary>
 		/// <returns></returns>
-		virtual Handle createAppropriateHandle() = 0; 
+		virtual Handle createAppropriateHandle() = 0;
 
 		size_t size() { return this->container.size(); }
 
