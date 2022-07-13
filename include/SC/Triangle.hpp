@@ -1,6 +1,6 @@
 #pragma once 
 #include "Vertex.hpp"
-#include "Material.hpp"
+#include "Handle.hpp"
 
 #include <glm/glm.hpp>
 
@@ -8,9 +8,10 @@
 
 namespace star::common {
 	struct Triangle {
-		Triangle();
+		Triangle() = default; 
+		Triangle(std::array<Vertex, 3> v) : verticies(v) { }
 
-		Vertex verticies[]; 
-		
+		std::array<Vertex, 3> verticies; 
+		Handle material; 
 	};
 }

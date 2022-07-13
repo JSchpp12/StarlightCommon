@@ -14,8 +14,6 @@ namespace star::common{
         glm::vec3 matDiffuse = glm::vec3{0.0f, 0.0f, 0.0f};
         glm::vec3 matSpecular = glm::vec3{ 0.0f, 0.0f, 0.0f }; 
         float matShininess = 1.0f; 
-
-    protected: 
             
     private: 
 
