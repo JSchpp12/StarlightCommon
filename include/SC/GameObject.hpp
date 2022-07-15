@@ -21,36 +21,34 @@
 #include <memory>
 #include <vector>
 
-namespace star{
-    namespace common{
-        class GameObject : public Entity{
-        public:
-            GameObject(glm::vec3 position, glm::vec3 scale, Handle& vertShaderHandle,
-                Handle& fragShaderHandle, std::vector<std::unique_ptr<common::Mesh>> meshes) :
-                Entity(), 
-                meshes(std::move(meshes)),
-                vertShader(std::make_unique<Handle>(vertShaderHandle)),
-                fragShader(std::make_unique<Handle>(fragShaderHandle))
-            {
-                this->setScale(scale); 
-                this->setPosition(position);
-            } 
+namespace star::common{
+    class GameObject : public Entity{
+    public:
+        GameObject(glm::vec3 position, glm::vec3 scale, Handle& vertShaderHandle,
+            Handle& fragShaderHandle, std::vector<std::unique_ptr<common::Mesh>> meshes) :
+            Entity(), 
+            meshes(std::move(meshes)),
+            vertShader(std::make_unique<Handle>(vertShaderHandle)),
+            fragShader(std::make_unique<Handle>(fragShaderHandle))
+        {
+            this->setScale(scale); 
+            this->setPosition(position);
+        } 
 
-            virtual ~GameObject() {}; 
+        virtual ~GameObject() {}; 
 
-            //get the handle for the vertex shader 
-            Handle getVertShader() { return *this->vertShader.get(); }
-            //get the handle for the fragment shader
-            Handle getFragShader() { return *this->fragShader.get(); }
-            const std::vector<std::unique_ptr<common::Mesh>>& getMeshes() { return this->meshes; }
-            glm::mat4 getNormalMatrix() { return glm::inverseTranspose(*this->displayMatrix); }
+        //get the handle for the vertex shader 
+        Handle getVertShader() { return *this->vertShader.get(); }
+        //get the handle for the fragment shader
+        Handle getFragShader() { return *this->fragShader.get(); }
+        const std::vector<std::unique_ptr<common::Mesh>>& getMeshes() { return this->meshes; }
+        glm::mat4 getNormalMatrix() { return glm::inverseTranspose(*this->displayMatrix); }
 
-        protected: 
+    protected: 
 
-        private: 
-            //is the mmodel matrix updated with most recent changes 
-            std::unique_ptr<Handle> vertShader, fragShader; 
-            std::vector<std::unique_ptr<common::Mesh>> meshes; 
-        };
-    }
+    private: 
+        //is the mmodel matrix updated with most recent changes 
+        std::unique_ptr<Handle> vertShader, fragShader; 
+        std::vector<std::unique_ptr<common::Mesh>> meshes; 
+    };
 }

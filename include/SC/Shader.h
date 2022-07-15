@@ -4,26 +4,19 @@
 #include <iostream>
 #include <memory> 
 
-namespace star{
-    namespace common{
-        class Shader{
-            public:
-                Shader(std::unique_ptr<std::vector<uint32_t>> compiledShader) : compiledCode(std::move(compiledShader)){}
-                // void LoadFromFile(){
-                //     std::cout << "loading" << std::endl; 
-                // }
+namespace star::common{
+    class Shader{
+        public:
+            Shader(std::unique_ptr<std::vector<uint32_t>> compiledShader) : compiledCode(std::move(compiledShader)){}
 
-                virtual ~Shader(){};
+            virtual ~Shader(){};
 
-                std::vector<uint32_t> GetSpirV() {
-                    return *this->compiledCode.get();
-                }
-            protected: 
+            std::vector<uint32_t> GetSpirV() {
+                return *this->compiledCode.get();
+            }
+        protected:  
                 
-                
-            private: 
-                std::unique_ptr<std::vector<uint32_t>> compiledCode; 
-        }; 
-    }
-
+        private: 
+            std::unique_ptr<std::vector<uint32_t>> compiledCode; 
+    }; 
 }

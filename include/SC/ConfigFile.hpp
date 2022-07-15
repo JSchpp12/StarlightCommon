@@ -49,7 +49,3 @@ namespace star{
         }; 
     }
 }
-
-// std::map<std::string, star::common::Config_Settings> star::common::ConfigFile::availableSettings = std::map<std::string, star::common::Config_Settings>{
-
-// }; 
