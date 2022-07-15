@@ -3,12 +3,10 @@
 
 #include <optional>
 
-namespace star{
-    namespace common{
-        struct Handle{
-            size_t containerIndex; 
-            Handle_Type type; 
-            std::optional<Shader_Stage> shaderStage; 
-        }; 
-    }
+namespace star::common{
+    struct Handle{
+        size_t containerIndex = 0; 
+        Handle_Type type = Handle_Type::null; 
+        std::optional<Shader_Stage> shaderStage; 
+    }; 
 }

@@ -7,8 +7,7 @@
 
 #include <glm/glm.hpp>
 
-namespace star {
-namespace common {
+namespace star::common{
 	class Light : public Entity{
 	public:
 		Light(common::Type::Light type) : Entity(), type(type) { }
@@ -56,5 +55,4 @@ namespace common {
 		glm::vec4 color = glm::vec4{1.0f, 1.0f, 1.0f, 1.0f};
 
 	};
-}
 }

@@ -35,10 +35,8 @@ namespace star::common{
 		Handle texture = Handle{0, Handle_Type::texture};
 
 	protected:
-
 		
 	private: 
-
 
 	};
 }
