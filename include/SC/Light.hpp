@@ -59,6 +59,12 @@ namespace star::common{
 		void setLinkedObjectHandle(Handle handle) { this->linkedObjectHandle = std::make_unique<Handle>(handle); }
 		void setLinkedObject(GameObject& object) { this->linkedObject = &object; }
 		Handle getLinkedObjectHandle() { return *this->linkedObjectHandle; }
+		bool hasLinkedObject() {
+			if (this->linkedObjectHandle)
+				return true;
+			else
+				return false;
+		}
 		Type::Light getType() { return this->type; }
 		glm::vec4 getAmbient() { return this->ambient; }
 		glm::vec4 getDiffuse() { return this->diffuse; }
