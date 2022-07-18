@@ -24,7 +24,8 @@ namespace star{
             shader, 
             object, 
             texture, 
-            material
+            material, 
+            light
         }; 
 
         enum Buttons {
