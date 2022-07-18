@@ -37,6 +37,15 @@ namespace star {
 				return glm::vec3{ matrixCopy[3][0], matrixCopy[3][1], matrixCopy[3][2] }; 
 			};
 
+			glm::vec3 getScale() {
+				glm::mat4 matrixCopy = *this->displayMatrix; 
+				return glm::vec3{
+					matrixCopy[0][0],
+					matrixCopy[1][1],
+					matrixCopy[2][2]
+				}; 
+			}
+
 			/// <summary>
 			/// Calculate what the current model matrix is 
 			/// </summary>

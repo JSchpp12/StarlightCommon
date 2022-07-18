@@ -23,7 +23,9 @@ namespace star::common{
 			this->container.add(std::move(newResource));
 			return newHandle;
 		}
-
+		T& getResource(const common::Handle& handle) {
+			return this->container.get(handle);
+		}
 		T* getDefault() {
 			if (this->defaultResource != nullptr)
 				return this->defaultResource;
@@ -45,9 +47,6 @@ namespace star::common{
 		T* defaultResource = nullptr;
 		std::unique_ptr<Handle> defaultHandle;
 
-		T& getResource(const common::Handle& handle) {
-			return this->container.get(handle);
-		}
 		/// <summary>
 		/// Create appropriate handle for this manager type 
 		/// </summary>
