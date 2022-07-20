@@ -2,7 +2,6 @@
 #include "Enums.h"
 
 namespace star::common {
-	//TODO: instead of having a bool for every option, can use uint and utilize binary operations to store settings
 	class RenderOptions {
 	public:
 		RenderOptions() = default; 
@@ -14,34 +13,18 @@ namespace star::common {
 			resetAll(); 
 
 			if (propToDraw != Render_Settings::Material::none){
-				if (propToDraw & Render_Settings::Material::ambient) {
-					this->drawAmbient = true;
-				}
-			}
-			else {
-				this->draw = true;
+				this->options |= propToDraw; 
 			}
 		}
 
-		uint32_t getRenderOptions() {
-			uint32_t options = 0; 
-
-			if (this->draw) {
-				return options; 
-			}
-			else {
-				if (this->drawAmbient)
-					return options |= Render_Settings::ambient; 
-			}
-		}
+		uint32_t getRenderOptions() { return this->options; }
 
 	private: 
-		bool draw = true;			//normal draw operation
-		bool drawAmbient = false;	//draw the ambient materials of each fragment
+		uint64_t options = 0; 
 
 		//reset rendering options to defaults
 		void resetAll() {
-			this->drawAmbient = false; 
+			this->options = 0;
 		}
 	};
 }
