@@ -9,7 +9,7 @@ namespace star::common {
 		RenderOptions(const RenderOptions&) = delete;
 		RenderOptions& operator=(const RenderOptions&) = delete;
 
-		void drawMaterialProperty(Render_Settings::Material propToDraw) {
+		void setRenderMaterialSetting(Render_Settings::Material propToDraw) {
 			resetAll(); 
 
 			if (propToDraw != Render_Settings::Material::none){
