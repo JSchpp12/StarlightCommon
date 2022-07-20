@@ -2,6 +2,7 @@
 #include "Enums.h"
 
 namespace star::common {
+	//TODO: instead of having a bool for every option, can use uint and utilize binary operations to store settings
 	class RenderOptions {
 	public:
 		RenderOptions() = default; 
@@ -19,6 +20,18 @@ namespace star::common {
 			}
 			else {
 				this->draw = true;
+			}
+		}
+
+		uint32_t getRenderOptions() {
+			uint32_t options = 0; 
+
+			if (this->draw) {
+				return options; 
+			}
+			else {
+				if (this->drawAmbient)
+					return options |= Render_Settings::ambient; 
 			}
 		}
 
