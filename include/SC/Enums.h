@@ -55,7 +55,9 @@ namespace star::common{
     namespace Render_Settings {
         enum Material {
             none, 
-            ambient
+            ambient, 
+            diffuse, 
+            specular
         };
     }
 }
