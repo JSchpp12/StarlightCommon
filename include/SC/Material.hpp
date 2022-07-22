@@ -19,12 +19,10 @@ namespace star::common{
 
 		Material(const glm::vec4& surfaceColor, const glm::vec4& highlightColor, const glm::vec4& ambient, 
 			const glm::vec4& diffuse, const glm::vec4& specular, 
-			const int& shiny, common::Handle& textureHandle) :
+			const int& shiny, const common::Handle& textureHandle, const common::Handle& bumpHandle) :
 			surfaceColor(surfaceColor), highlightColor(highlightColor),
 			ambient(ambient), diffuse(diffuse),
-			specular(specular), shinyCoefficient(shiny){
-			this->texture = textureHandle;
-		}
+			specular(specular), shinyCoefficient(shiny), texture(textureHandle), bumpMap(bumpHandle) { }
 
 		glm::vec4 surfaceColor{0.5f, 0.5f, 0.5f, 1.0f};
 		glm::vec4 highlightColor{ 0.5f, 0.5f, 0.5f, 1.0f };
@@ -32,7 +30,8 @@ namespace star::common{
 		glm::vec4 diffuse{ 0.5f, 0.5f, 0.5f, 1.0f };
 		glm::vec4 specular{ 0.5f, 0.5f, 0.5f, 1.0f }; 
 		int shinyCoefficient = 1; 
-		Handle texture = Handle{0, Handle_Type::texture};
+		Handle texture = Handle::getDefault();
+		Handle bumpMap = Handle::getDefault(); 
 
 	protected:
 		
