@@ -17,7 +17,7 @@ namespace common {
 			return false;
 		}
 
-		void add(const std::string path, common::Handle resourceHandle) {
+		void add(const std::string& path, common::Handle resourceHandle) {
 			this->fileMap.insert(std::pair<std::string, Handle>(path, resourceHandle));
 		}
 

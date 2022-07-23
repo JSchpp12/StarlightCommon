@@ -10,21 +10,46 @@ namespace star::common {
 		RenderOptions& operator=(const RenderOptions&) = delete;
 
 		void setRenderMaterialSetting(Render_Settings::Material propToDraw) {
-			resetAll(); 
+			resetMaterial(); 
 
 			if (propToDraw != Render_Settings::Material::none){
-				this->options |= propToDraw; 
+				this->materialOptions |= propToDraw; 
 			}
 		}
 
-		uint32_t getRenderOptions() { return this->options; }
+		void setRenderFeature(Render_Settings::Feature feature, bool enabled) {
+			if (enabled)
+				this->renderFeatures |= (1 << feature);
+			else
+				this->renderFeatures &= ~(1 << feature); 
+		}
+		/// <summary>
+		/// Check if specific feature is enabled.
+		/// </summary>
+		/// <param name="feature"></param>
+		/// <returns></returns>
+		bool isFeatureEnabled(Render_Settings::Feature feature) {
+			return (this->renderFeatures & (1 << feature)) != 0;
+		}
+
+		uint32_t getRenderOptions() { 
+			return (uint32_t)renderFeatures << 16 | materialOptions;
+		}
 
 	private: 
-		uint64_t options = 0; 
+		uint16_t renderFeatures = 0; 
+		uint16_t materialOptions = 0; 
 
-		//reset rendering options to defaults
 		void resetAll() {
-			this->options = 0;
+			resetMaterial(); 
+			resetTexture(); 
+		}
+		//reset rendering options to defaults
+		void resetMaterial() {
+			this->materialOptions = 0;
+		}
+		void resetTexture() {
+			this->renderFeatures = 0;
 		}
 	};
 }

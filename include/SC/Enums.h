@@ -24,7 +24,8 @@ namespace star::common{
         object, 
         texture, 
         material, 
-        light
+        light, 
+        map
     }; 
 
     enum Buttons {
@@ -53,11 +54,17 @@ namespace star::common{
     }
         
     namespace Render_Settings {
+
         enum Material {
-            none, 
-            ambient, 
-            diffuse, 
-            specular
+            none,
+            ambient,
+            diffuse,
+            specular,
+            bumpMap
+        };
+
+        enum Feature {
+            bumpMapping
         };
     }
 }

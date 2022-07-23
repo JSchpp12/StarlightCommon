@@ -7,18 +7,23 @@
 namespace star::common{
     class Texture{
     public: 
-        //Texture(std::unique_ptr<unsigned char> rawTextureData, std::unique_ptr<int> width, std::unique_ptr<int> height, std::unique_ptr<int> channels ){
-        //    this->rawTextureData = std::move(rawTextureData); 
-        //}
-
-        Texture(const std::string& pathToImage, std::unique_ptr<unsigned char> rawTextureData, int texWidth, int texHeight, int texChannels) :
-            pathToFile(pathToImage), 
-            rawTextureData(std::move(rawTextureData)), 
-            texWidth(texWidth), 
-            texHeight(texHeight), 
-            texChannels(texChannels)
-        {
-
+        /// <summary>
+        /// Initalize texture with provided raw data. For use with programatically generated textures. 
+        /// </summary>
+        /// <param name="rawTextureData"></param>
+        /// <param name="texWidth"></param>
+        /// <param name="texHeight"></param>
+        /// <param name="texChannels"></param>
+        Texture(std::unique_ptr<unsigned char> rawTextureData, int texWidth, int texHeight, 
+            int texChannels) 
+            : rawTextureData(std::move(rawTextureData)), texWidth(texWidth), 
+            texHeight(texHeight), texChannels(texChannels){ }
+        Texture(const std::string& pathToImage, std::unique_ptr<unsigned char> rawTextureData, int texWidth, 
+            int texHeight, int texChannels) 
+            : pathToFile(pathToImage), rawTextureData(std::move(rawTextureData)), 
+            texWidth(texWidth), texHeight(texHeight), 
+            texChannels(texChannels){ 
+            this->onDisk = true; 
         }
 
         int width() { return this->texWidth; }
@@ -36,6 +41,8 @@ namespace star::common{
         int texWidth, texHeight, texChannels;
         std::unique_ptr<unsigned char> rawTextureData; 
         std::string pathToFile;
+        bool onDisk = false; 
+
 
     private: 
     }; 
