@@ -10,7 +10,7 @@ namespace common {
 	class FileResourceContainer {
 	public:
 		//check the file map to see if the resource has been previously loaded
-		bool fileLoaded(const std::string& pathToObject) {
+		bool contains(const std::string& pathToObject) {
 			auto found = fileMap.find(pathToObject);
 			if (found != fileMap.end())
 				return true;
@@ -21,7 +21,7 @@ namespace common {
 			this->fileMap.insert(std::pair<std::string, Handle>(path, resourceHandle));
 		}
 
-		Handle get(const std::string& pathToObject) {
+		Handle getHandle(const std::string& pathToObject) {
 			auto found = fileMap.find(pathToObject);
 			if (found != fileMap.end()) {
 				return found->second;
@@ -30,6 +30,17 @@ namespace common {
 				throw std::runtime_error("Requested resource does not exist");
 			}
 		}
+
+		std::string getPath(const Handle& handle) {
+			//todo: this is an unordered search which is very slow (improve if needed)
+			for (auto element = fileMap.begin(); element != fileMap.end(); element++) {
+				if (element->second.containerIndex == handle.containerIndex) {
+					return element->first;
+				}
+			}
+			throw std::runtime_error("Requested resource does not exist");
+		}
+		size_t size() { return fileMap.size(); }
 
 	protected:
 		std::map<std::string, Handle> fileMap;

@@ -30,7 +30,7 @@ namespace star::common{
 
         private:
             std::unique_ptr<std::vector<Triangle>> triangles; 
-            common::Handle material{0, Handle_Type::material};
+            common::Handle material = Handle::getDefault(); 
         };
 
         Mesh(std::unique_ptr<std::vector<Triangle>> triangles, common::Handle material) : 

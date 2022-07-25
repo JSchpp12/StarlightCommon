@@ -1,8 +1,11 @@
 #pragma once 
 
+#include <stb_image.h>
+
 #include <memory> 
 #include <vector> 
 #include <string> 
+#include <stdexcept>
 
 namespace star::common{
     class Texture{
@@ -14,36 +17,21 @@ namespace star::common{
         /// <param name="texWidth"></param>
         /// <param name="texHeight"></param>
         /// <param name="texChannels"></param>
-        Texture(std::unique_ptr<unsigned char> rawTextureData, int texWidth, int texHeight, 
+        Texture(const std::string& pathToImage, int texWidth, int texHeight, 
             int texChannels) 
-            : rawTextureData(std::move(rawTextureData)), texWidth(texWidth), 
+            : pathToFile(pathToImage), texWidth(texWidth), 
             texHeight(texHeight), texChannels(texChannels){ }
-        Texture(const std::string& pathToImage, std::unique_ptr<unsigned char> rawTextureData, int texWidth, 
-            int texHeight, int texChannels) 
-            : pathToFile(pathToImage), rawTextureData(std::move(rawTextureData)), 
-            texWidth(texWidth), texHeight(texHeight), 
-            texChannels(texChannels){ 
-            this->onDisk = true; 
-        }
 
-        int width() { return this->texWidth; }
-
-        int height() { return this->texHeight; }
-
-        int channels() { return this->texChannels; }
-
-        void* data() { return this->rawTextureData.get(); }
+        Texture(const Texture& texture) : texChannels(texture.texChannels), 
+            texHeight(texture.texHeight), texWidth(texture.texWidth){ };
 
         std::string path() { return this->pathToFile; }
 
-        //virtual unsigned char* load() = 0; 
     protected: 
         int texWidth, texHeight, texChannels;
-        std::unique_ptr<unsigned char> rawTextureData; 
         std::string pathToFile;
-        bool onDisk = false; 
-
 
     private: 
+
     }; 
 }

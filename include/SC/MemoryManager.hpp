@@ -17,16 +17,16 @@ namespace star::common{
 		MemoryManager(std::unique_ptr<T> defaultResource){ }
 		virtual ~MemoryManager() { };
 
-		Handle addResource(std::unique_ptr<T> newResource) {
+		virtual Handle addResource(std::unique_ptr<T> newResource) {
 			Handle newHandle = this->createAppropriateHandle();
 			newHandle.containerIndex = this->container.size();
 			this->container.add(std::move(newResource));
 			return newHandle;
 		}
-		T& getResource(const common::Handle& handle) {
+		T& resource(const common::Handle& handle) {
 			return this->container.get(handle);
 		}
-		T* getDefault() {
+		virtual T* getDefault() {
 			if (this->defaultResource != nullptr)
 				return this->defaultResource;
 			throw std::runtime_error("No default resource was set");
@@ -41,7 +41,7 @@ namespace star::common{
 		void init(std::unique_ptr<T> defaultResource) {
 			Handle defaultHandle = this->addResource(std::move(defaultResource));
 			this->defaultHandle = std::make_unique<Handle>(defaultHandle);
-			this->defaultResource = &this->getResource(defaultHandle);
+			this->defaultResource = &this->resource(defaultHandle);
 		}
 
 		T* defaultResource = nullptr;
