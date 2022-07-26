@@ -9,41 +9,43 @@
 #include <memory>
 #include <map>
 #include <vector> 
+#include <assert.h>
 
-namespace star{
-    namespace common{
-        template<typename T>
-        class FileResourceManager : public MemoryManager<T>{
-        public:
-            FileResourceManager() : MemoryManager<T>() { }
-            virtual ~FileResourceManager(){}; 
+namespace star::common{
+    template<typename T>
+    class FileResourceManager : private MemoryManager<T>{
+    public:
+        FileResourceManager() : MemoryManager<T>() { }
+        virtual ~FileResourceManager(){}; 
 
-            virtual common::Handle add(const std::string& path) = 0; 
-            /// <summary>
-            /// Add a unique resource that will not automatically be shared by any other object.
-            /// </summary>
-            /// <param name="newResource"></param>
-            /// <returns></returns>
-            virtual Handle addUniqueResource(std::unique_ptr<T> newResource) {
-                return this->MemoryManager<T>::addResource(std::move(newResource));
+        virtual Handle addResource(const std::string& path, std::unique_ptr<T> newResource) {
+            if (fileContainer.contains(path)) {
+                return fileContainer.getHandle(path);
             }
-            virtual T& get(const common::Handle& handle) {
-                return this->MemoryManager<T>::getResource(handle); 
-            }
-
-        protected:
-            FileResourceContainer<T> fileContainer;
-
-            virtual Handle addResource(const std::string& path, std::unique_ptr<T> newResource) {
+            else {
                 common::Handle newHandle = this->MemoryManager<T>::addResource(std::move(newResource));
-                this->fileContainer.add(path, newHandle); 
+                newHandle.isOnDisk = true;
+                this->fileContainer.add(path, newHandle);
                 return newHandle;
             }
+        }
 
-            virtual Handle createAppropriateHandle() override = 0; 
+        virtual Handle addResource(std::unique_ptr<T> newResource) override { return this->MemoryManager<T>::addResource(std::move(newResource)); }
+        /// <summary>
+        /// Get reference to in memory resource 
+        /// </summary>
+        /// <param name="resourceHandle"></param>
+        /// <returns></returns>
+        virtual T& resource(const Handle& resourceHandle) {
+            assert((resourceHandle.type == this->handleType() || resourceHandle.type == Handle_Type::defaultHandle) && "The requested resource handle does not match the type of resources managed by this manager.");
+            return this->MemoryManager<T>::resource(resourceHandle);
+        }
+    protected:
+        FileResourceContainer<T> fileContainer;
+        virtual Handle createAppropriateHandle() override = 0; 
+        virtual common::Handle_Type handleType() = 0; 
 
-        private: 
+    private: 
 
-        };
-    }
+    };
 }
