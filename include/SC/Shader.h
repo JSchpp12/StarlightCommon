@@ -3,21 +3,18 @@
 #include <vector> 
 #include <iostream>
 #include <memory> 
+#include <string>
 
 namespace star::common{
     class Shader{
         public:
-            Shader(std::unique_ptr<std::vector<uint32_t>> compiledShader) : compiledCode(std::move(compiledShader)){}
-            Shader(const Shader& shader) : compiledCode(std::make_unique<std::vector<uint32_t>>(*shader.compiledCode)){ }
+            std::string path; 
+            Shader(const std::string& path) : path(path){ }
             virtual ~Shader(){};
-
-            std::vector<uint32_t> GetSpirV() {
-                return *this->compiledCode.get();
-            }
 
         protected:  
                 
         private: 
-            std::unique_ptr<std::vector<uint32_t>> compiledCode; 
+
     }; 
 }

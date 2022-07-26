@@ -20,6 +20,7 @@ namespace star::common{
 		virtual Handle addResource(std::unique_ptr<T> newResource) {
 			Handle newHandle = this->createAppropriateHandle();
 			newHandle.containerIndex = this->container.size();
+			newHandle.isOnDisk = false; 
 			this->container.add(std::move(newResource));
 			return newHandle;
 		}

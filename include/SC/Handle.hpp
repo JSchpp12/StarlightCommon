@@ -11,6 +11,7 @@ namespace star::common{
             return newHandle; 
         }
         Handle() = default;
+        Handle(const Handle& handle) = default;
 
         uint32_t id = 0; 
         size_t containerIndex = 0; 
