@@ -49,7 +49,8 @@ namespace star::common{
 
         enum Light {
             point,
-            directional
+            directional, 
+            spot
         };
     }
         

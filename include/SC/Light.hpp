@@ -69,7 +69,6 @@ namespace star::common{
 		glm::vec4 getAmbient() { return this->ambient; }
 		glm::vec4 getDiffuse() { return this->diffuse; }
 		glm::vec4 getSpecular() { return this->specular; }
-
 	private:
 		//handle to the object that will be rendered along with the light (positional object such as billboard)
 		std::unique_ptr<Handle> linkedObjectHandle;
