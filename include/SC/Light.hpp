@@ -10,6 +10,13 @@
 namespace star::common{
 	class Light : public Entity{
 	public:
+		bool enabled; 
+		float diameter; 
+		Type::Light type;
+		glm::vec4 ambient = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 diffuse = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 specular = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+
 		Light(Type::Light type, glm::vec3 position) : Entity(position) {
 			this->type = type; 
 		}
@@ -56,6 +63,10 @@ namespace star::common{
 			this->Entity::moveRelative(movement);
 		}
 
+		virtual void setEnabled(const bool& state) {
+			enabled = state; 
+		}
+
 		void setLinkedObjectHandle(Handle handle) { this->linkedObjectHandle = std::make_unique<Handle>(handle); }
 		void setLinkedObject(GameObject& object) { this->linkedObject = &object; }
 		Handle getLinkedObjectHandle() { return *this->linkedObjectHandle; }
@@ -73,11 +84,6 @@ namespace star::common{
 		//handle to the object that will be rendered along with the light (positional object such as billboard)
 		std::unique_ptr<Handle> linkedObjectHandle;
 		GameObject* linkedObject = nullptr; 
-
-		Type::Light type;
-		glm::vec4 ambient = glm::vec4{0.5f, 0.5f, 0.5f, 1.0f};
-		glm::vec4 diffuse = glm::vec4{0.5f, 0.5f, 0.5f, 1.0f};
-		glm::vec4 specular = glm::vec4{0.5f, 0.5f, 0.5f, 1.0f};
 
 	};
 }
