@@ -2,15 +2,16 @@
 //right hand coordinate system 
 //row-major notation 
 
+
 #include "Entity.hpp"
 
 #include <glm/glm.hpp>
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
 #include <memory>
 
 //Note: this camera system will fail if the user looks up the +y-axis
-namespace star {
-	namespace common {
+namespace star::common{
 		//Camera object which will be used during rendering
 		class Camera
 		{
@@ -32,7 +33,6 @@ namespace star {
 			virtual void setPosition(glm::vec3 newPosition) {
 				this->position = std::make_unique<glm::vec3>(newPosition); 
 				this->lookDirection = std::make_unique<glm::vec3>(glm::normalize(*this->lookAtPoint - *this->position));
-				//this->lookDirection = std::make_unique<glm::vec3>(glm::vec3(0.0f, 0.0f, -1.0f)); 
 
 				//compute right vector
 				//use vec {0, 1, 0} as arbitrary vec for calculation 
@@ -87,8 +87,8 @@ namespace star {
 			std::unique_ptr<glm::vec3> lookDirection, lookAtPoint, upVector, forwardVector, rightVector, position;
 			std::unique_ptr<float> fieldOfView;		//Field of view of the camera represented in degrees
 			std::unique_ptr<float> nearClippingPlaneDistance, farClippingPlaneDistance;
+
 		private:
 
 		};
 	}
-}
