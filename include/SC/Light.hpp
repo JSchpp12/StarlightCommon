@@ -12,8 +12,6 @@ namespace star::common{
 	public:
 		bool enabled			= true; 
 		Type::Light type		= Type::Light::point;
-		float innerDiameter		= 0.0f;
-		float outerDiameter		= 1.0f;
 		glm::vec4 ambient		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
 		glm::vec4 diffuse		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
 		glm::vec4 specular		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
@@ -75,6 +73,20 @@ namespace star::common{
 			enabled = state; 
 		}
 
+		virtual void setInnerDiameter(const float& amt) {
+			//inner diameter must always be less than outer diameter and greater than 0 
+			if (amt < outerDiameter && amt > 0) {
+				innerDiameter = amt; 
+			}
+		}
+
+		virtual void setOuterDiameter(const float& amt) {
+			//outer diamater must always be greater than inner diameter 
+			if (amt > innerDiameter) {
+				outerDiameter = amt; 
+			}
+		}
+
 		void setLinkedObjectHandle(Handle handle) { this->linkedObjectHandle = std::make_unique<Handle>(handle); }
 		void setLinkedObject(GameObject& object) { this->linkedObject = &object; }
 		Handle getLinkedObjectHandle() { return *this->linkedObjectHandle; }
@@ -88,10 +100,14 @@ namespace star::common{
 		glm::vec4 getAmbient() { return ambient; }
 		glm::vec4 getDiffuse() { return diffuse; }
 		glm::vec4 getSpecular() { return specular; }
+		float getInnerDiameter() { return innerDiameter; }
+		float getOuterDiameter() { return outerDiameter; }
 	private:
 		//handle to the object that will be rendered along with the light (positional object such as billboard)
 		std::unique_ptr<Handle> linkedObjectHandle;
 		GameObject* linkedObject = nullptr; 
+		float innerDiameter = 0.0f;
+		float outerDiameter = 1.0f;
 
 	};
 }
