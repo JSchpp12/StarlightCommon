@@ -52,6 +52,12 @@ namespace star::common{
             directional, 
             spot
         };
+
+        enum Axis {
+            x, 
+            y, 
+            z
+        };
     }
         
     namespace Render_Settings {

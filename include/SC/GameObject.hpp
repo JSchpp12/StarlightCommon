@@ -42,7 +42,7 @@ namespace star::common{
         //get the handle for the fragment shader
         Handle getFragShader() { return *this->fragShader.get(); }
         const std::vector<std::unique_ptr<common::Mesh>>& getMeshes() { return this->meshes; }
-        glm::mat4 getNormalMatrix() { return glm::inverseTranspose(*this->displayMatrix); }
+        glm::mat4 getNormalMatrix() { return glm::inverseTranspose(getDisplayMatrix()); }
 
     protected: 
 
