@@ -10,7 +10,6 @@
 namespace star::common{
 	class Light : public Entity{
 	public:
-		bool enabled			= true; 
 		Type::Light type		= Type::Light::point;
 		glm::vec4 ambient		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
 		glm::vec4 diffuse		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
@@ -69,8 +68,18 @@ namespace star::common{
 			this->Entity::moveRelative(movement);
 		}
 
-		virtual void setEnabled(const bool& state) {
-			enabled = state; 
+		/// <summary>
+		/// Turn the light off or on. Default behavior is to simply switch the light status.
+		/// </summary>
+		/// <param name="state">the state to set the light to. If none is provided, default state is used</param>
+		virtual void setEnabled(const bool* state = nullptr){
+			if (state != nullptr) {
+				enabled = *state; 
+			}
+			else {
+				//flip value
+				enabled = !enabled; 
+			}
 		}
 
 		virtual void setInnerDiameter(const float& amt) {
@@ -96,6 +105,7 @@ namespace star::common{
 			else
 				return false;
 		}
+		bool getEnabled() { return enabled; }
 		Type::Light getType() { return type; }
 		glm::vec4 getAmbient() { return ambient; }
 		glm::vec4 getDiffuse() { return diffuse; }
@@ -108,6 +118,7 @@ namespace star::common{
 		GameObject* linkedObject = nullptr; 
 		float innerDiameter = 0.0f;
 		float outerDiameter = 1.0f;
+		bool enabled = true;
 
 	};
 }
