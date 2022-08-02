@@ -10,13 +10,13 @@
 namespace star::common{
 	class Light : public Entity{
 	public:
-		bool enabled = true; 
-		Type::Light type;
-		float diameter = 0.0f;
-		glm::vec4 ambient = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
-		glm::vec4 diffuse = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
-		glm::vec4 specular = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
-		glm::vec4 direction = glm::vec4{0.0f, -1.0f, 0.0f, 0.0f};
+		bool enabled		 = true; 
+		Type::Light type	 = Type::Light::point;
+		float diameter		 = 0.0f;
+		glm::vec4 ambient	 = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 diffuse	 = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 specular	 = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 direction	 = glm::vec4{0.0f, -1.0f, 0.0f, 0.0f};
 
 		Light(Type::Light type, glm::vec3 position) : Entity(position) {
 			this->type = type; 
