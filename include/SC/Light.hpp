@@ -10,13 +10,14 @@
 namespace star::common{
 	class Light : public Entity{
 	public:
-		bool enabled		 = true; 
-		Type::Light type	 = Type::Light::point;
-		float diameter		 = 0.0f;
-		glm::vec4 ambient	 = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
-		glm::vec4 diffuse	 = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
-		glm::vec4 specular	 = glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
-		glm::vec4 direction	 = glm::vec4{0.0f, -1.0f, 0.0f, 0.0f};
+		bool enabled			= true; 
+		Type::Light type		= Type::Light::point;
+		float innerDiameter		= 0.0f;
+		float outerDiameter		= 1.0f;
+		glm::vec4 ambient		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 diffuse		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 specular		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
+		glm::vec4 direction		= glm::vec4{0.0f, -1.0f, 0.0f, 0.0f};
 
 		Light(Type::Light type, glm::vec3 position) : Entity(position) {
 			this->type = type; 
@@ -25,29 +26,35 @@ namespace star::common{
 		//create light with no linked object
 		Light(Type::Light type, glm::vec3 position, const glm::vec4& ambient, 
 			const glm::vec4& diffuse, const glm::vec4& specular, 
-			const glm::vec4* direction = nullptr, const float* cutoff = nullptr) 
+			const glm::vec4* direction = nullptr, const float* innerCutoff = nullptr, 
+			const float* outerCutoff = nullptr) 
 			: Entity(position), type(type),
 			ambient(ambient), diffuse(diffuse), 
 			specular(specular)
 		{
 			if (direction != nullptr)
 				this->direction = *direction; 
-			if (cutoff != nullptr)
-				this->diameter = *cutoff;
+			if (innerCutoff != nullptr)
+				innerDiameter = *innerCutoff;
+			if (outerCutoff != nullptr)
+				outerDiameter = *outerCutoff;
 		}
 		//create light with linked object
 		Light(Type::Light type, glm::vec3 position, glm::vec3 scale,
 			Handle linkedObjectHandle, GameObject& linkedObject, 
 			const glm::vec4& ambient, const glm::vec4& diffuse,
-			const glm::vec4& specular, const glm::vec4* direction = nullptr, const float* cutoff = nullptr) :
+			const glm::vec4& specular, const glm::vec4* direction = nullptr, 
+			const float* innerCutoff = nullptr, const float* outerCutoff = nullptr) :
 			Entity(position, scale), linkedObjectHandle(std::make_unique<Handle>(linkedObjectHandle)), 
 			ambient(ambient), diffuse(diffuse),
 			specular(specular), type(type)
 		{
 			if (direction != nullptr)
 				this->direction = *direction; 
-			if (cutoff != nullptr)
-				this->diameter = *cutoff;
+			if (innerCutoff != nullptr)
+				innerDiameter = *innerCutoff;
+			if (outerCutoff != nullptr)
+				outerDiameter = *outerCutoff;
 		}
 		
 		//check if the light has a linked render object
