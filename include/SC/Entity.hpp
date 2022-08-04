@@ -11,9 +11,11 @@
 namespace star::common {
 	class Entity {
 	public:
+		glm::vec3 positionCoords = glm::vec3(); 
+
 		Entity() = default; 
 
-		Entity(const glm::vec3& position) {
+		Entity(const glm::vec3& position) : positionCoords(position) {
 			this->setPosition(position);
 		}
 
@@ -40,6 +42,7 @@ namespace star::common {
 			scaleMat = glm::scale(scaleMat, scale);
 		}
 		virtual void setPosition(glm::vec3 newPosition) {
+			positionCoords = newPosition;
 			translationMat = glm::translate(newPosition);
 		}
 		/// <summary>T
@@ -50,6 +53,7 @@ namespace star::common {
 			//need to update model matrix before applying further translations
 			translationMat = glm::translate(translationMat, movement);
 			
+			positionCoords = translationMat * glm::vec4(positionCoords, 1.0); 
 			updateCoordsTranslation(translationMat);
 		}
 		/// <summary>
@@ -139,7 +143,7 @@ namespace star::common {
 			auto displayMat = getDisplayMatrix(); 
 			return glm::normalize(displayMat * upVector); 
 		}
-		glm::mat4 getDisplayMatrix() {
+		virtual glm::mat4 getDisplayMatrix() {
 			return translationMat * rotationMat * scaleMat;
 		}
 

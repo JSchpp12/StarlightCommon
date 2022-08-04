@@ -14,7 +14,7 @@ namespace star::common{
 		glm::vec4 ambient		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
 		glm::vec4 diffuse		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
 		glm::vec4 specular		= glm::vec4{ 0.5f, 0.5f, 0.5f, 1.0f };
-		glm::vec4 direction		= glm::vec4{0.0f, -1.0f, 0.0f, 0.0f};
+		glm::vec4 direction		= glm::vec4{ 0.0f, 1.0f, 0.0f, 0.0f };
 
 		Light(Type::Light type, glm::vec3 position) : Entity(position) {
 			this->type = type; 
@@ -94,6 +94,24 @@ namespace star::common{
 			if (amt > innerDiameter) {
 				outerDiameter = amt; 
 			}
+		}
+
+		/// <summary>
+		/// Calculate the view matrix for this light source. Used when the light is being used as a shadow caster
+		/// </summary>
+		virtual glm::mat4 getViewMatrix() {
+			assert(direction != glm::vec4( 0.0f, 1.0f, 0.0f, 0.0f) && "The light cannot be pointed in the same direction as the arb vector in calculations.");
+			glm::vec3 tmpArbVector{ 0.0f, 0.0f, 1.0f };
+			glm::vec3 minDirection = glm::vec3(this->direction);
+			auto rightVector = glm::normalize(glm::cross(tmpArbVector, minDirection));
+
+			auto upVector = glm::normalize(glm::cross(minDirection, rightVector));
+
+			return glm::lookAt(
+				type == Type::directional ? glm::normalize(- minDirection) * glm::vec3(3.0f) : this->positionCoords,
+				type == Type::directional ? minDirection : this->positionCoords + minDirection, 
+				upVector
+			);
 		}
 
 		void setLinkedObjectHandle(Handle handle) { this->linkedObjectHandle = std::make_unique<Handle>(handle); }
